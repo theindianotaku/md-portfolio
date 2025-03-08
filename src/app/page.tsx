@@ -1,57 +1,43 @@
-import Image from 'next/image';
 import ResumeContent from '@/markdown/resume-content.mdx';
 
 export default function Home() {
   return (
     <div className="container">
-      <main className="flex flex-col justify-center items-start md:items-center">
+      <main className="flex flex-col justify-center items-start md:items-center py-16">
         <ResumeContent />
       </main>
-      <footer className="flex gap-6 flex-wrap items-center justify-center">
+      <footer className="flex gap-6 flex-wrap items-center justify-center p-8">
         <a
           className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+          href="mailto:debashishzero@mail.com"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
+          📧 debashishzero@mail.com
         </a>
         <a
           className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+          href="https://theindianotaku.github.io/"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
+          🌏 theindianotaku.github.io
         </a>
         <a
           className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+          href="https://www.linkedin.com/in/debashishnayak/"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
+          🔗 linkedin.com/in/debashishnayak
+        </a>
+        <a
+          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
+          href="https://github.com/theindianotaku"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          👾 github.com/theindianotaku
         </a>
       </footer>
     </div>
