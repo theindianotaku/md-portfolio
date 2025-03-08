@@ -3,15 +3,11 @@ import ResumeContent from '@/markdown/resume-content.mdx';
 
 export default function Home() {
   return (
-    <div className="">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <div className="animate-ping-large">
-          <h1>My Awesome Case Study</h1>
-          <p>This is a well-structured paragraph using Tailwind Typography.</p>
-        </div>
+    <div className="container">
+      <main className="flex flex-col justify-center items-start md:items-center">
         <ResumeContent />
       </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
+      <footer className="flex gap-6 flex-wrap items-center justify-center">
         <a
           className="flex items-center gap-2 hover:underline hover:underline-offset-4"
           href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"

@@ -1,14 +1,20 @@
 import type { Metadata } from 'next';
-import { Inter, Merriweather } from 'next/font/google';
+import { Inter, Merriweather, Mona_Sans } from 'next/font/google';
 import './globals.css';
 
 const interFont = Inter({
-  variable: '--font-inter',
+  variable: '--font-sans',
   subsets: ['latin'],
 });
 
 const merriweatherFont = Merriweather({
-  variable: '--font-merriweather',
+  variable: '--font-serif',
+  subsets: ['latin'],
+  weight: ['400'],
+});
+
+const monaSansFont = Mona_Sans({
+  variable: '--font-mono',
   subsets: ['latin'],
   weight: ['400'],
 });
@@ -27,7 +33,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${interFont.variable} ${merriweatherFont.variable} antialiased`}
+        className={`${interFont.variable} ${merriweatherFont.variable} ${monaSansFont.variable} antialiased`}
       >
         {children}
       </body>
