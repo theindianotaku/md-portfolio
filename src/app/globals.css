@@ -1,26 +1,29 @@
 @import 'tailwindcss';
-@config "../../tailwind.config.js";
+@config "../../tailwind.config.mjs";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --emerald-green: #00674f;
+  --jade-green: #00bb77;
+  --accent: var(--jade-green);
+
+  --background: #fffafa;
+  --foreground: #252525;
 }
 
-@theme inline {
+@theme {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --accent: var(--emerald-green);
+    --background: #252525;
+    --foreground: #fffafa;
   }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
   font-family: var(--font-sans);
 }
 
@@ -29,12 +32,52 @@ li,
 blockquote,
 figure,
 figcaption {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
 }
 
-h1 {
-  font-family: var(--font-mono);
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-serif);
+  font-weight: var(--font-weight-light);
 }
 
 .prose {
+}
+
+@layer base {
+  html {
+    font-size: 18px;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  .text-highlight {
+    @apply inline-block leading-normal px-1;
+
+    background-color: var(--accent);
+  }
+}
+
+@layer utilities {
+  .bg-custom-theme {
+    background-color: var(--background);
+  }
+
+  .fg-custom-theme {
+    color: var(--foreground);
+  }
+
+  .bg-custom-accent {
+    background-color: var(--accent);
+  }
+
+  .fg-custom-accent {
+    color: var(--accent);
+  }
 }
