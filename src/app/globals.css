@@ -4,20 +4,22 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --emerald-green: #00674f;
-  --jade-green: #00bb77;
-  --accent: var(--jade-green);
-
-  --background: #fffafa;
-  --foreground: #252525;
-
   --color-background: var(--background);
   --color-foreground: var(--foreground);
 }
 
 @layer base {
-  @variant dark {
-    --accent: var(--emerald-green);
+  :root {
+    --emerald-green: #00674f;
+    --jade-green: #00bb77;
+    --highlight-accent: var(--jade-green);
+
+    --background: #fffafa;
+    --foreground: #252525;
+  }
+
+  .dark {
+    --highlight-accent: var(--emerald-green);
     --background: #252525;
     --foreground: #fffafa;
   }
@@ -61,16 +63,16 @@
   }
 
   .bg-custom-accent {
-    background-color: var(--accent);
+    background-color: var(--highlight-accent);
   }
 
   .fg-custom-accent {
-    color: var(--accent);
+    color: var(--highlight-accent);
   }
 
   .text-highlight {
     @apply inline-block leading-normal px-1;
 
-    background-color: var(--accent);
+    background-color: var(--highlight-accent);
   }
 }
