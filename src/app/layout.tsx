@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { Merriweather, Mona_Sans, IBM_Plex_Sans } from 'next/font/google';
 import './globals.css';
 
+import { ThemeProvider } from 'next-themes';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
 
@@ -36,13 +37,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark" suppressHydrationWarning>
       <body
         className={`${sansFont.variable} ${serifFont.variable} ${monaSansFont.variable} antialiased`}
       >
-        <Header />
-        {children}
-        <Footer />
+        <ThemeProvider
+          defaultTheme="dark"
+          enableSystem={false}
+          attribute="class"
+        >
+          <Header />
+          {children}
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   );
