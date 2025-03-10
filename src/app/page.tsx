@@ -1,12 +1,15 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import ResumeContent from '@/markdown/resume-content.mdx';
 import CustomH2 from '@/components/h2';
+import { Button } from '@/components/ui/button';
+import { ChevronRight, FileDown } from 'lucide-react';
 
 import debashishImage from '@/assets/images/hero-v2.png';
 
 export default function Home() {
   return (
-    <div className="pt-30 container">
+    <div className="container">
       <main className="flex flex-col justify-center items-start md:items-center py-10">
         <div className="flex flex-row justify-between items-center">
           <div className="flex flex-col items-start justify-center prose dark:prose-invert">
@@ -19,9 +22,21 @@ export default function Home() {
               <span className="text-highlight font-black">{`what’s next!`}</span>
             </h1>
             <p className="font-normal"></p>
-            <div className="flex flex-row">
-              <button>Read more about my work</button>
-              <button>Download Resume</button>
+            <div className="flex flex-row gap-4">
+              <Button variant="ghost" asChild>
+                <Link href="/#experience">
+                  View My Work <ChevronRight />
+                </Link>
+              </Button>
+              <Button variant="ghost" asChild>
+                <Link
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href="https://drive.google.com/file/d/1l8XOKH15uvggMyIczpt1b-zkOL2U0V6Y/view"
+                >
+                  Download Resume <FileDown />
+                </Link>
+              </Button>
             </div>
           </div>
           <div className="flex items-center justify-center w-[600px] h-[600px]">

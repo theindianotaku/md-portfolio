@@ -1,6 +1,9 @@
+import { ModeToggle } from './toggle-theme';
+import { HeaderNav } from './nav-menu';
+
 const Header = () => {
   return (
-    <div className="h-30 flex justify-center fixed w-full z-10 bg-custom-theme border-b border-white/15">
+    <div className="h-30 flex justify-center w-full z-10 bg-custom-theme border-b border-emerald-900/50 dark:border-white/15">
       <nav className="w-full flex flex-row items-center justify-between px-10">
         <div className="flex flex-col items-start">
           <span className="font-black">{`I'm Debashish Nayak.`}</span>
@@ -9,12 +12,9 @@ const Header = () => {
             keen eye for detail.
           </span>
         </div>
-        <div className="flex gap-4">
-          <a href="#">About</a>
-          <a href="#">Experience</a>
-          <a href="#">Contact</a>
-          <button>Download Resume</button>
-          <button>Toggle theme</button>
+        <div className="flex items-center gap-4">
+          <HeaderNav />
+          <ModeToggle />
         </div>
       </nav>
     </div>

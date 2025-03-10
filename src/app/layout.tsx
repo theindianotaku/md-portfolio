@@ -39,16 +39,19 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
       <body
-        className={`${sansFont.variable} ${serifFont.variable} ${monaSansFont.variable} antialiased`}
+        className={`${sansFont.variable} ${serifFont.variable} ${monaSansFont.variable} antialiased min-h-screen`}
       >
         <ThemeProvider
           defaultTheme="dark"
-          enableSystem={false}
+          enableSystem
           attribute="class"
+          disableTransitionOnChange
         >
           <Header />
-          {children}
-          <Footer />
+          <div className="flex flex-col grow h-[calc(100vh-7.5rem)] overflow-y-auto">
+            {children}
+            <Footer />
+          </div>
         </ThemeProvider>
       </body>
     </html>
