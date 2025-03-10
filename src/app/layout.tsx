@@ -26,9 +26,14 @@ const monaSansFont = Mona_Sans({
 });
 
 export const metadata: Metadata = {
-  title: `Debashish Nayak`,
-  description:
-    'Portfolio of Debashish Nayak, Senior Software Developer, Frontend',
+  title: 'Debashish Nayak',
+  description: `Debashish's Portfolio - Senior Software Engineer, Frontend`,
+  openGraph: {
+    type: 'profile',
+    title: 'Debashish Nayak',
+    description: `Debashish's Portfolio - Senior Software Engineer, Frontend`,
+    url: 'https://debaintech.vercel.app/',
+  },
 };
 
 export default function RootLayout({
@@ -36,6 +41,21 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: 'Debashish Nayak',
+    url: 'https://debaintech.vercel.app',
+    image: 'https://debaintech.vercel.app/opengraph-image.png',
+    jobTitle: 'Frontend Engineer',
+    description: 'Building Clean & Accessible Web Experiences.',
+    sameAs: [
+      'https://github.com/theindianotaku',
+      'https://www.linkedin.com/in/debashishnayak/',
+      'https://theindianotaku.github.io/',
+    ],
+  };
+
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
       <body
@@ -53,6 +73,10 @@ export default function RootLayout({
             <Footer />
           </div>
         </ThemeProvider>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
       </body>
     </html>
   );
