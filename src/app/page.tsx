@@ -14,7 +14,7 @@ export default function Home() {
         <div className="flex flex-row justify-between items-center">
           <div className="flex flex-col items-start justify-center prose dark:prose-invert">
             <h1 className="font-light leading-normal text-4xl">
-              Building{' '}
+              <span className="sr-only">Debashish Nayak</span>Building{' '}
               <span className="text-highlight font-black">
                 clean & accessible
               </span>{' '}
