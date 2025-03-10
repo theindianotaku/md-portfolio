@@ -3,27 +3,27 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-@theme {
+:root {
+  --emerald-green: #00674f;
+  --jade-green: #00bb77;
+
+  --highlight-accent: var(--jade-green);
+  --background: #fffafa;
+  --foreground: #252525;
+}
+
+.dark {
+  --highlight-accent: var(--emerald-green);
+  --background: #252525;
+  --foreground: #fffafa;
+}
+
+@theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
 }
 
 @layer base {
-  :root {
-    --emerald-green: #00674f;
-    --jade-green: #00bb77;
-    --highlight-accent: var(--jade-green);
-
-    --background: #fffafa;
-    --foreground: #252525;
-  }
-
-  .dark {
-    --highlight-accent: var(--emerald-green);
-    --background: #252525;
-    --foreground: #fffafa;
-  }
-
   html {
     font-size: 18px;
   }
