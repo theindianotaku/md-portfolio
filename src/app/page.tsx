@@ -32,7 +32,7 @@ export default function Home() {
                 <Link
                   target="_blank"
                   rel="noopener noreferrer"
-                  href="https://drive.google.com/file/d/1l8XOKH15uvggMyIczpt1b-zkOL2U0V6Y/view"
+                  href="https://drive.google.com/file/d/1rXhHgc5TBWOW5SHVTECS6vEFFneWsWOX/view"
                 >
                   Download Resume <FileDown />
                 </Link>
