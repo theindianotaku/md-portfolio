@@ -5,11 +5,20 @@ const nextConfig: NextConfig = {
   /* config options here */
   // Configure `pageExtensions` to include markdown and MDX files
   pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
-  experimental: {
-    mdxRs: true, // Enables the Rust-based MDX compiler (faster)
-  },
 };
 
-const configWithMdx = nextMdx()(nextConfig);
+const withMdx = nextMdx({
+  options: {
+    remarkPlugins: [['remark-gfm', {}]],
+    rehypePlugins: [
+      ['rehype-slug', {}],
+      ['rehype-autolink-headings', {}],
+      ['@stefanprobst/rehype-extract-toc', {}],
+      ['@stefanprobst/rehype-extract-toc/mdx', {}],
+    ],
+  },
+});
+
+const configWithMdx = withMdx(nextConfig);
 
 export default configWithMdx;

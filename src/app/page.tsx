@@ -1,11 +1,12 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import ResumeContent from '@/markdown/resume-content.mdx';
-import CustomH2 from '@/components/h2';
+import ResumeContent, { tableOfContents } from '@/markdown/resume-content.mdx';
 import { Button } from '@/components/ui/button';
 import { ChevronRight, FileDown } from 'lucide-react';
 
 import debashishImage from '@/assets/images/hero-v2.png';
+
+console.log(`Console ~ tableOfContents:`, tableOfContents);
 
 export default function Home() {
   return (
@@ -21,7 +22,6 @@ export default function Home() {
               experiences. Excited for <br />
               <span className="text-highlight font-black">{`what’s next!`}</span>
             </h1>
-            <p className="font-normal"></p>
             <div className="flex flex-row gap-4">
               <Button variant="ghost" asChild>
                 <Link href="/#experience">
@@ -41,12 +41,6 @@ export default function Home() {
           </div>
           <div className="flex items-center justify-center w-[600px] h-[600px]">
             <Image src={debashishImage} alt="Debashish's picture" />
-          </div>
-        </div>
-        <div className="flex flex-col items-start prose dark:prose-invert">
-          <CustomH2>About me</CustomH2>
-          <div>
-            <p>{`👋 Hi there! I'm a senior software developer with a strong passion for user experience and UI development. With extensive experience in vanilla JavaScript and a proven track record of delivering high-quality React applications, I'm well-equipped to take on challenging projects.`}</p>
           </div>
         </div>
         <ResumeContent />
