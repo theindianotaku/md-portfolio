@@ -9,11 +9,16 @@ const nextConfig: NextConfig = {
 
 const withMdx = nextMdx({
   options: {
+    // @ts-expect-error wrong import type
     remarkPlugins: [['remark-gfm', {}]],
     rehypePlugins: [
+      // @ts-expect-error wrong import type
       ['rehype-slug', {}],
+      // @ts-expect-error wrong import type
       ['rehype-autolink-headings', {}],
+      // @ts-expect-error wrong import type
       ['@stefanprobst/rehype-extract-toc', {}],
+      // @ts-expect-error wrong import type
       ['@stefanprobst/rehype-extract-toc/mdx', {}],
     ],
   },
