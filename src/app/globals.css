@@ -126,8 +126,13 @@
     @apply border-border outline-ring/50;
   }
 
+  @media (width >= 48rem) {
+    html {
+      font-size: 17px;
+    }
+  }
+
   html {
-    font-size: 18px;
     scroll-behavior: smooth;
   }
 
@@ -143,6 +148,32 @@
   figure,
   figcaption {
     font-family: var(--font-sans);
+  }
+}
+
+@layer components {
+  .icon {
+    position: absolute;
+    height: 100%;
+    width: 25px;
+    left: -25px;
+    display: flex;
+    align-items: center;
+  }
+
+  .icon.icon-link::before {
+    content: '🔗';
+    font-size: 1rem;
+    visibility: hidden;
+    display: inline-block;
+    vertical-align: middle;
+    overflow: visible;
+  }
+
+  h2:hover .icon.icon-link::before,
+  h3:hover .icon.icon-link::before,
+  h4:hover .icon.icon-link::before {
+    visibility: visible;
   }
 }
 
@@ -181,31 +212,5 @@
       font-family: var(--font-serif);
       font-weight: var(--font-weight-light);
     }
-  }
-}
-
-@layer components {
-  .icon {
-    position: absolute;
-    height: 100%;
-    width: 25px;
-    left: -25px;
-    display: flex;
-    align-items: center;
-  }
-
-  .icon.icon-link::before {
-    content: '🔗';
-    font-size: 1rem;
-    visibility: hidden;
-    display: inline-block;
-    vertical-align: middle;
-    overflow: visible;
-  }
-
-  h2:hover .icon.icon-link::before,
-  h3:hover .icon.icon-link::before,
-  h4:hover .icon.icon-link::before {
-    visibility: visible;
   }
 }

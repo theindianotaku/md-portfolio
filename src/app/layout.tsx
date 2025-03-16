@@ -68,7 +68,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Header />
-          <div className="flex flex-col grow h-[calc(100vh-7.5rem)] overflow-y-auto">
+          <div className="flex flex-col grow h-[calc(100vh-2.5rem)] md:h-[calc(100vh-7.5rem)] overflow-y-auto">
             {children}
             <Footer />
           </div>

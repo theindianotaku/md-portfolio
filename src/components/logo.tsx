@@ -1,11 +1,18 @@
-const Logo = ({ className }: { className?: string }) => {
+const Logo = ({
+  className,
+  size = 64,
+}: {
+  className?: string;
+  size?: number;
+}) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="64"
-      height="64"
+      width={size}
+      height={size}
       fill="currentColor"
       className={className}
+      viewBox="0 0 64 64"
     >
       <path
         fillRule="evenodd"
