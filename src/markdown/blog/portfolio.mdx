@@ -1,0 +1,74 @@
+---
+title: This Portfolio Website of Mine
+description: "What purpose does a personal website serve?" I asked myself this
+date: 2024-05-24T19:14:23.792Z
+tags: ['markdown', 'frontend', 'personal']
+permalink: 'https://debaintech.vercel.app/blog/portfolio'
+siteName: 'Portfolio of Debashish - Senior Software Engineer, Frontend'
+---
+
+import MdxLayout from '@/components/mdx-layout';
+
+## Introduction
+
+Creating a personal website is more than just an exercise in frontend development - it’s a way to establish a digital presence that reflects who I am, what I stand for, and the work I’m proud of. My goal was to build a clean, accessible, and performant portfolio that showcases my skills while staying true to my personal aesthetic.
+
+## Motivation
+
+As a frontend engineer with a keen eye for design, I wanted a space to share my work, however small or big, in an honest and structured manner. This portfolio is meant to grow with me—whether it’s showcasing accessibility fixes, open-source contributions, or personal projects, it will serve as a living document of my journey.
+
+## Design Philosophy
+
+### Color Palette
+
+One of the most defining aspects of this project was my deliberate choice of colors. I’ve always been drawn to shades of green, whether in nature, in artwork, or even in gaming. I specifically chose **Emerald Green (#046A38) for light mode** and **Jade Green (#00A86B) for dark mode**. These colors aren’t just aesthetic choices; they hold deeper meaning:
+
+- **Emerald Green** has historically been associated with growth, renewal, and wisdom. It’s a color that signifies clarity and harmony.
+- **Jade Green** is a symbol of balance, prosperity, and tranquility, often revered in Eastern culture and history.
+
+Coincidentally, my preference for jade weapons in *Genshin Impact* reflects this attachment - I own multiple *Primordial Jade Cutters*, *Primordial Jade Winged-Spears*, and even the catalyst. This subtle connection between my digital and real-life preferences made these colors feel like a natural extension of my personal brand.
+
+## Technical Implementation
+
+### Tech Stack
+
+The website is built using **Next.js**, **Tailwind CSS**, and **MDX** for content flexibility. Some key technical decisions:
+
+- **Tailwind CSS** for styling, ensuring maintainability and rapid iteration.
+- **MDX** to allow for easy integration of markdown with React components.
+- **Dark Mode Support** implemented via Tailwind’s `dark:` variants without external UI libraries.
+- **Accessible Navigation** using Next.js' `<Link />` component with smooth in-page scrolling for better UX.
+
+### Key Features
+
+1. **Dynamic Navigation**
+    - Clicking on navigation links smoothly scrolls to the corresponding section using anchor-based navigation.
+    - Implemented using `id` attributes dynamically generated from MDX headings.
+2. **Typography & Readability**
+    - Opted for a font with better spacing than Inter, which initially felt too congested.
+    - Adjusted line height and letter spacing to improve legibility.
+3. **Performance Considerations**
+    - Minimized unnecessary re-renders by optimizing component structure.
+    - Used Next.js `<Image />` for optimized asset loading.
+
+## Lessons Learned
+
+Building this portfolio was not just about writing code—it was about balancing **design, performance, and accessibility**. I also realized the importance of iteration. Initially, I integrated ShadCN for UI components but later removed it as it introduced unnecessary overrides. Keeping things minimal worked better for my needs.
+
+## What’s Next?
+
+This portfolio is just the beginning. I plan to expand it by:
+
+- Adding case studies for my past accessibility work, where we systematically improved **WYSIWYG content for accessibility**, ensuring proper image alts, heading structures, and semantic elements.
+- Introducing a **blog** where I document my technical learnings and insights.
+- Experimenting with **interactive UI showcases** for some of my frontend projects.
+
+## Final Thoughts
+
+This project is a reflection of my approach to frontend development—**meticulous, detail-oriented, and user-first**. Whether it’s choosing the right color for a theme or ensuring smooth in-page navigation, every decision has been intentional.
+
+As I continue evolving as a developer, this portfolio will evolve with me, serving as both a personal archive and a professional showcase.
+
+export default function ResumeContent({ children }) {
+  return <MdxLayout>{children}</MdxLayout>;
+}

@@ -9,8 +9,14 @@ const nextConfig: NextConfig = {
 
 const withMdx = nextMdx({
   options: {
-    // @ts-expect-error wrong import type
-    remarkPlugins: [['remark-gfm', {}]],
+    remarkPlugins: [
+      // @ts-expect-error wrong import type
+      ['remark-frontmatter'],
+      // @ts-expect-error wrong import type
+      ['remark-mdx-frontmatter'],
+      // @ts-expect-error wrong import type
+      ['remark-gfm', {}],
+    ],
     rehypePlugins: [
       // @ts-expect-error wrong import type
       ['rehype-slug', {}],

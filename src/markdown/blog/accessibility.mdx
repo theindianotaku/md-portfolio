@@ -1,0 +1,351 @@
+---
+title: My Journey with Accessibility
+description: Making Accessibility a Core Part of HackerRank's Product Experience
+date: 2024-05-24T19:14:23.792Z
+tags: ['accessibility', 'frontend', 'wcag']
+permalink: 'https://debaintech.vercel.app/blog/accessibility'
+siteName: 'Portfolio of Debashish - Senior Software Engineer, Frontend'
+---
+
+import MdxLayout from '@/components/mdx-layout';
+
+## Introduction
+
+I'm Debashish Nayak, and I want to share my journey of working on accessibility at HackerRank. This wasn't a journey I planned - it began as a business need and evolved into an area where I developed deep expertise and passion.
+
+This case study outlines my work on implementing accessibility across multiple platforms at HackerRank, the challenges we faced, the solutions we developed, and the impact of these efforts. My aim is to share my experience truthfully, highlighting both the successes and learning opportunities.
+
+## Background: How It All Started
+
+My first encounter with accessibility was unplanned. As an SDE-1, I was tasked with improving the performance of our Backbone.js-based login page for the HackerRank Screen platform. "Performance" meant passing Google Lighthouse metrics, which included accessibility.
+
+Initially, I had a simplistic understanding of accessibility:
+
+> To me in my early years, what accessibility meant was 'aria' attributes. I felt adding these aria attributes, placeholders... I could make sure my app was accessible."
+>
+
+I fixed the issues flagged by Lighthouse - improving color contrast, adding alt text to images, using proper HTML semantics, and implementing landmarks. We got our green scores, and I thought that was it. Little did I know this was just the beginning.
+
+## The Real Accessibility Journey: From Compliance to Commitment
+
+### Project 1: Making HackerRank Screen (React) Accessible
+
+The real journey began when we learned that enterprise customers like IBM, US government institutions, and even McDonald's required WCAG compliance to use our platform. This was a business imperative - we needed to be accessible to maintain and grow our customer base.
+
+The scope was daunting. Our platform had:
+
+- Test login with complex instructions
+- Question listing pages
+- Navigation components
+- Timers and status indicators
+- Multiple question types (coding, MCQ, subjective)
+- Third-party components like Monaco editor and CKEditor
+
+We partnered with Deque Systems for guidance and auditing. My colleague Aakansha and I split the work, with me focusing on implementation while she handled project management and also contributed to development.
+
+### Understanding Accessibility
+
+First, we needed to learn what makes an application truly accessible. We studied WCAG 2.1 guidelines, which organize accessibility requirements into four principles:
+
+1. **Perceivable**: Information must be presentable to users in ways they can perceive
+    - Text alternatives for non-text content
+    - Captions and alternatives for multimedia
+    - Content that can be presented in different ways
+    - Content that's easy to see and hear
+2. **Operable**: User interface components must be operable
+    - All functionality available from keyboard
+    - Users have enough time to read and use content
+    - Content doesn't cause seizures
+    - Users can navigate and find content
+3. **Understandable**: Information and operation must be understandable
+    - Text is readable and understandable
+    - Content appears and operates in predictable ways
+    - Users are helped to avoid and correct mistakes
+4. **Robust**: Content must be robust enough to be interpreted by various user agents
+    - Compatible with current and future user tools
+
+### Our Approach: From Atoms to Molecules to Organisms
+
+We applied a systematic approach, starting with the atomic components in our UI kit:
+
+1. **Colors and Theming**: Ensured proper contrast ratios for both light and dark themes
+2. **Base Components**: Made buttons, inputs, and other basic components accessible
+3. **Complex Widgets**: Implemented proper keyboard navigation, focus management, and aria attributes for complex components
+4. **Third-Party Components**: Added accessibility overrides for Monaco editor, CKEditor, and other libraries
+5. **Page-Level Integration**: Ensured proper focus order, landmark regions, and semantic structure
+
+### Technical Implementations
+
+### Color Contrast and Dark Mode
+
+We updated our design system colors to ensure proper contrast ratios for both light and dark modes. This involved working with designers to adjust our brand colors while maintaining our visual identity.
+
+```css
+/* Example of color variables with proper contrast ratios */
+:root {
+  /* Light theme colors */
+  --primary-light: #008080; /* Teal with 4.5:1 contrast against white */
+  --text-light: #333333; /* Dark grey with 12:1 contrast against white */
+
+  /* Dark theme colors */
+  --primary-dark: #00cccc; /* Light teal with 4.5:1 contrast against #121212 */
+  --text-dark: #f0f0f0; /* Off-white with 15:1 contrast against #121212 */
+}
+
+[data-theme="light"] {
+  --primary: var(--primary-light);
+  --text: var(--text-light);
+  --background: #ffffff;
+}
+
+[data-theme="dark"] {
+  --primary: var(--primary-dark);
+  --text: var(--text-dark);
+  --background: #121212;
+}
+```
+
+### Responsive Design for 400% Zoom
+
+One of the most challenging requirements was supporting 400% zoom without horizontal scrolling. We created a responsive approach using CSS media queries and conditional rendering:
+
+```jsx
+// WindowWidthWrapper component to detect zoom level
+export const BREAKPOINTS = {
+  BEYOND_ZOOM_125: 'BEYOND_ZOOM_125',
+  BEYOND_ZOOM_150: 'BEYOND_ZOOM_150',
+  BEYOND_ZOOM_200: 'BEYOND_ZOOM_200',
+  BEYOND_ZOOM_250: 'BEYOND_ZOOM_250',
+  BEYOND_ZOOM_300: 'BEYOND_ZOOM_300',
+};
+
+export const BREAKPOINT_VALUES = {
+  [BREAKPOINTS.BEYOND_ZOOM_125]: '(max-width: 1023px)',
+  [BREAKPOINTS.BEYOND_ZOOM_150]: '(max-width: 852px)',
+  [BREAKPOINTS.BEYOND_ZOOM_200]: '(max-width: 639px)',
+  [BREAKPOINTS.BEYOND_ZOOM_250]: '(max-width: 511px)',
+  [BREAKPOINTS.BEYOND_ZOOM_300]: '(max-width: 425px)',
+};
+
+// Using the wrapper in components
+const CodingQuestion = ({ breakpoints }) => {
+  // Detect if we're in a highly zoomed state
+  const lowWidthLayout = breakpoints[BREAKPOINTS.BEYOND_ZOOM_125];
+
+  return (
+    <div className={classNames('coding-question', { 'low-width-layout': lowWidthLayout })}>
+      {lowWidthLayout
+        ? renderLowWidthLayout()
+        : renderSplitterLayout()
+      }
+    </div>
+  );
+};
+```
+
+This allowed us to render simpler layouts at high zoom levels while still maintaining functionality.
+
+### Keyboard Accessibility for Complex Widgets
+
+For our coding question interface, which used Monaco editor, we implemented custom keyboard shortcuts and focus management:
+
+```jsx
+addShortcuts() {
+  const {
+    addCommand,
+    t,
+    questionData: { type },
+  } = this.props;
+
+  addCommand(['mod', 'enter'], this.handleRunKey, {
+    title: getShortcutI18nTitle('run_code', t),
+    desc: type === QUESTION.DATABASE ? t('actions.run_query') : t('actions.run_code'),
+  });
+  addCommand(['alt', 'enter'], this.handleSubmitKey, {
+    title: getShortcutI18nTitle('submit_code', t),
+    desc: t('actions.submit_code'),
+  });
+  if (type !== QUESTION.DATABASE) {
+    addCommand(['mod', 'singlequote'], this.handleRunAllTestcasesKey, {
+      title: getShortcutI18nTitle('run_all_tests', t),
+      desc: t('actions.run_all_tests'),
+    });
+  }
+
+  // Prevent default browser save dialog on CMD+S
+  addCommand(['mod', 's'], cancelEvent);
+}
+```
+
+### Screen Reader Support
+
+We ensured screen readers could access all content and functionality through proper HTML semantics, ARIA attributes, and dynamic announcements:
+
+```jsx
+// Example of a live region for test results
+<div
+  role="status"
+  aria-live="polite"
+  className="sr-only"
+>
+  {liveStatus?.liveMessage}
+</div>
+```
+
+### Project 2: Extending Accessibility to Other Applications
+
+After the success with HackerRank Screen, I was assigned to coordinate accessibility work across other HackerRank applications, including the Recruiter app and Interviews platform. This included making embedded web IDEs like VSCode, XTerm, and JupyterLab accessible.
+
+Each IDE presented unique challenges:
+
+- **VSCode**: Menu items not keyboard accessible, custom plugins needing accessibility
+- **XTerm**: Focus trap handling and keyboard shortcuts
+- **JupyterLab**: Poor accessibility by design, requiring extensive modifications
+
+For VSCode, we worked on ensuring all plugins we added (package dependency widgets, live web server preview, etc.) were accessible. For JupyterLab, we added focus management to prevent trapping users in notebook cells.
+
+### Project 3: Fixing WYSIWYG-generated Content
+
+The most challenging project was addressing accessibility issues in content created through WYSIWYG editors (CKEditor). Problem descriptions contained:
+
+- Tables without headers
+- Images without alt text
+- Mathematical expressions without accessible labels
+- Improper heading hierarchies
+- GIFs without pause controls or alt text
+
+With 6,200+ questions in our library, manual fixes weren't feasible. I developed a systematic approach:
+
+1. Used node scripts with Cheerio to parse and categorize issues
+2. Added data attributes to problematic elements
+3. Divided issues into those needing manual review vs. automated fixes
+4. Developed scripts to apply fixes based on these categories
+5. Updated CKEditor plugins to enforce accessibility in new content
+
+```jsx
+// Example script for finding tables without headers
+const $ = cheerio.load(question);
+const table = $("table");
+
+for (let i = 0; i < table.length; i++) {
+  const currentTable = table.eq(i);
+
+  if (
+    currentTable.find("th").length === 0 &&
+    currentTable.find("thead").length === 0
+  ) {
+    // This table needs headers
+    const tableId = tablesData.length + 1;
+    tablesData.push({
+      id: tableId,
+      questionId,
+      table: currentTable,
+    });
+
+    // Apply fix based on review data
+    const headerFixType = tableReviewDataArray[tableId - 1]["Header Type"];
+
+    if (headerFixType === "Two Header") {
+      // Create a thead element and move the first two rows into it
+      const thead = $("<thead></thead>");
+      currentTable.find("tr:lt(2)").appendTo(thead);
+      currentTable.prepend(thead);
+      currentTable.attr("data-ally", "t-2h");
+    } else if (headerFixType === "One Header") {
+      const thead = $("<thead></thead>");
+      currentTable.find("tr:lt(1)").appendTo(thead);
+      currentTable.prepend(thead);
+      currentTable.attr("data-ally", "t-1h");
+    }
+  }
+}
+```
+
+The most common issue was GIFs without proper accessibility. We created a solution to wrap GIFs in collapsible content with proper controls:
+
+```jsx
+function getGIFCollapsible(content, detailsAttributeList = []) {
+  return `<style type="text/css">
+  details[open] > summary > .section-title-gif-hide, details > summary > .section-title-gif-show { display: inline; }
+  details > summary > .section-title-gif-hide, details[open] > summary > .section-title-gif-show { display: none; }
+  .section-title-gif.section-title-gif.section-title-gif { display: inline-block; background: transparent; color: inherit;
+  cursor: pointer; text-decoration: underline; margin-top: 4px; margin-bottom: 4px; padding: 8px; }
+  </style>
+  <details open="open" ${detailsAttributeList.join(" ")}
+    ${A11Y_ATTRIBUTE_NAME}="${A11Y_ATTRIBUTE_VALUE.DETAILS_SUMMARY_GIF}">
+    <summary class="section-title section-title-gif">
+      <span class="section-title-gif-hide">Hide animation</span>
+      <span class="section-title-gif-show">Show animation</span>
+    </summary>
+    <div class="collapsable-details">
+      ${content}
+    </div>
+  </details>`;
+}
+```
+
+After identifying and fixing issues across 2,200+ questions, we also published guidelines for content creators to follow when building new questions.
+
+## Impact
+
+Our accessibility work had meaningful impact on multiple levels:
+
+### Business Impact
+
+- Retained and expanded enterprise clients like IBM, McDonald's, and US educational institutions
+- Differentiated HackerRank from competitors by being one of the first in our space to achieve WCAG 2.1 AA compliance
+- Helped secure contracts with organizations requiring accessibility compliance
+
+### User Impact
+
+- Made our platform usable for candidates with disabilities
+- Improved the experience for all users through better keyboard navigation, contrast, and overall usability
+- Reduced barriers to participation in technical assessments
+
+### Technical Impact
+
+- Created reusable patterns for accessibility implementation
+- Built knowledge and expertise within the engineering team
+- Established ongoing processes for ensuring accessibility
+
+## Lessons Learned
+
+### What Worked Well
+
+- Starting with atomic components and working up to page-level integration
+- Partnering with experts (Deque) for auditing and guidance
+- Developing automated tools for finding and fixing accessibility issues
+- Building accessibility considerations into our development process
+
+### Challenges and Shortcomings
+
+- Initial underestimation of effort required (6 months planned, 8 months actual for Screen platform)
+- Difficulty in making third-party components accessible
+- Challenge of maintaining accessibility with content created through WYSIWYG editors
+- Learning curve for the entire team to understand accessibility requirements
+
+## Personal Growth and Reflection
+
+This journey transformed my understanding of accessibility from "just adding ARIA attributes" to a comprehensive approach that considers the diverse needs of all users. It shaped how I approach development, making me consider from the start:
+
+- How will someone navigate this with a keyboard?
+- Will this work with a screen reader?
+- Is there enough contrast?
+- Does this make sense if you can't see it?
+- Will this work at high zoom levels?
+
+While the work was challenging - particularly during COVID when I was working remotely in a small apartment - it was deeply rewarding to know our efforts were making a difference for users with disabilities.
+
+I learned that accessibility isn't about checking boxes, but about empathy and inclusion. The most powerful moment was seeing a Deque team member with a disability navigate our application using a screen reader at incredible speed. It gave me a new perspective on why this work matters.
+
+## Conclusion
+
+Accessibility isn't an add-on feature; it's a fundamental aspect of quality software. My journey at HackerRank taught me that building accessible products is not just about compliance - it's about creating experiences that work for everyone.
+
+Through this work, I developed a passion for accessibility that continues to inform my approach to development. I became known as the go-to person for accessibility questions and took pride in helping others understand how to build more inclusive products.
+
+The tech industry still has a long way to go in making digital experiences truly accessible for all, but I'm proud to have contributed to progress in this area and continue to advocate for accessibility in all the work I do.
+
+export default function ProjectContent({ children }) {
+  return <MdxLayout>{children}</MdxLayout>;
+}

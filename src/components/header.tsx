@@ -1,5 +1,5 @@
 import { ModeToggle } from './toggle-theme';
-// import { HeaderNav } from './nav-menu';
+import { HeaderNav } from './nav-menu';
 import Logo from './logo';
 import Link from 'next/link';
 
@@ -29,6 +29,7 @@ const Header = () => {
         </div>
 
         <div className="flex items-center gap-2.5 md:gap-5">
+          <HeaderNav />
           <ModeToggle />
         </div>
       </nav>

@@ -24,7 +24,7 @@ export default function Home() {
           <div className="flex gap-4">
             <Button variant="ghost" asChild>
               <Link href="/#experience">
-                View My Work <ChevronRight />
+                Discover My Work <ChevronRight />
               </Link>
             </Button>
             <Button variant="ghost" asChild>
@@ -33,13 +33,13 @@ export default function Home() {
                 rel="noopener noreferrer"
                 href="https://drive.google.com/file/d/1rXhHgc5TBWOW5SHVTECS6vEFFneWsWOX/view"
               >
-                Download Resume <FileDown />
+                My Resume <FileDown />
               </Link>
             </Button>
           </div>
         </div>
         <div className="flex items-center justify-center max-w-[300px] md:max-w-[400px]">
-          <Image src={debashishImage} alt="Debashish's picture" />
+          <Image src={debashishImage} alt="Debashish's photo" />
         </div>
       </div>
       <div className="relative flex flex-row-reverse gap-5 px-10">

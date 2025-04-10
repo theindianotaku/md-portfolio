@@ -16,16 +16,16 @@ export function HeaderNav() {
     <NavigationMenu>
       <NavigationMenuList>
         <NavigationMenuItem>
-          <Link href="/#about-me" legacyBehavior passHref>
+          <Link href="/#experience" legacyBehavior passHref>
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              About me
+              Experience
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <Link href="/#experience" legacyBehavior passHref>
+          <Link href="/blog" legacyBehavior passHref>
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              Experience
+              Blog
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>
