@@ -38,13 +38,9 @@ export async function generateMetadata({
     };
   }
 }
-
-export default async function BlogPostPage({
-  params,
-}: {
-  params: { slug: string };
-}) {
-  const { slug } = await params;
+type tParams = Promise<{ slug: string[] }>;
+export default async function BlogPostPage({ params }: { params: tParams }) {
+  const { slug }: { slug: string[] } = await params;
 
   try {
     // Dynamic import of the MDX file
