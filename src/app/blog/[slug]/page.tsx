@@ -1,6 +1,7 @@
 // app/blog/[slug]/page.tsx
 import { notFound } from 'next/navigation';
 import { getBlogSlugs } from '@/lib/blog';
+import { MDXComponent, pParams } from '@/types/types';
 
 // Generate static paths at build time
 export async function generateStaticParams() {
@@ -9,11 +10,7 @@ export async function generateStaticParams() {
 }
 
 // Define metadata for the page
-export async function generateMetadata({
-  params,
-}: {
-  params: { slug: string };
-}) {
+export async function generateMetadata({ params }: { params: pParams }) {
   try {
     const { slug } = await params;
     const { frontmatter } = await import(`@/markdown/blog/${slug}.mdx`);
@@ -38,16 +35,16 @@ export async function generateMetadata({
     };
   }
 }
-type tParams = Promise<{ slug: string[] }>;
-export default async function BlogPostPage({ params }: { params: tParams }) {
+
+export default async function BlogPostPage({ params }: { params: pParams }) {
   const { slug }: { slug: string[] } = await params;
 
   try {
     // Dynamic import of the MDX file
-    const PostModule = await import(`@/markdown/blog/${slug}.mdx`);
+    const PostModule: MDXComponent = await import(
+      `@/markdown/blog/${slug}.mdx`
+    );
     const { default: Content, frontmatter } = PostModule;
-    // const Content = PostModule.default;
-    console.log(`Console ~ PostModule:`, Object.keys(PostModule));
 
     return (
       <div className="container mx-auto py-8">
