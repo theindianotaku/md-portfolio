@@ -1,6 +1,6 @@
 const Footer = () => {
   return (
-    <footer className="flex gap-6 flex-wrap items-center justify-center p-8 border-t border-emerald-900/50 dark:border-white/15">
+    <footer className="flex gap-6 flex-wrap items-center justify-center p-8 border-t border-highlight-accent-900/50">
       <a
         className="flex items-center gap-2 hover:underline hover:underline-offset-4"
         href="mailto:debashishzero@mail.com"
