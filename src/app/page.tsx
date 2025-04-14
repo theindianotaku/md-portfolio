@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import ResumeContent, { tableOfContents } from '@/markdown/resume-content.mdx';
 import { Button } from '@/components/ui/button';
-import { ChevronRight, FileDown } from 'lucide-react';
+import { MoveDownRight, MoveUpRight } from 'lucide-react';
 
 import debashishImage from '@/assets/images/hero-v2.png';
 
@@ -22,18 +22,19 @@ export default function Home() {
             <span className="text-highlight font-black">{`what’s next!`}</span>
           </h1>
           <div className="flex gap-4">
-            <Button variant="ghost" asChild>
-              <Link href="/#experience">
-                Discover My Work <ChevronRight />
+            <Button variant="outline" asChild>
+              <Link href="/#project-spotlights" className="no-underline">
+                Discover My Work <MoveDownRight />
               </Link>
             </Button>
-            <Button variant="ghost" asChild>
+            <Button variant="outline" asChild>
               <Link
                 target="_blank"
                 rel="noopener noreferrer"
                 href="https://drive.google.com/file/d/1rXhHgc5TBWOW5SHVTECS6vEFFneWsWOX/view"
+                className="no-underline"
               >
-                My Resume <FileDown />
+                My Resume <MoveUpRight />
               </Link>
             </Button>
           </div>
@@ -50,7 +51,7 @@ export default function Home() {
               <Link href="#about-me">About Me</Link>
             </li>
             <li>
-              <Link href="#experience">Experience</Link>
+              <Link href="#project-spotlights">Experience</Link>
               <ul>
                 <li>
                   <Link href="#random">Senior Software Engineer</Link>
@@ -64,7 +65,7 @@ export default function Home() {
               </ul>
             </li>
             <li>
-              <Link href="#experience">Achievements & Accolades</Link>
+              <Link href="#project-spotlights">Achievements & Accolades</Link>
               <ul>
                 <li>
                   <Link href="#random">Senior Software Engineer</Link>

@@ -1,47 +1,112 @@
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { MoveDownRight, MoveUpRight } from 'lucide-react';
 import MdxLayout from '@/components/mdx-layout';
 
 ## About Me
 👋 Hi there! I'm a **Frontend Engineer** with **6 years of experience** crafting accessible, scalable, and user-focused web solutions. Known for a meticulous approach, strong collaboration, and a keen eye for detail in both design and architecture. Now returning with renewed focus and adaptability after a personal hiatus.
 
-## Experience
+## My Journey So Far
 
-### Senior Software Engineer
+When I reflect on my path in software development, it feels like yesterday when I was trying to figure out what a DOM was. My journey officially began at HackerRank, where I've had the privilege of growing from an intern to a Senior Software Engineer.
 
-**HackerRank**, Bengaluru, India – (Jan 2022 - Apr 2024)
+### The Beginning: Intern Days (Jun - Aug 2018)
 
-- Led **accessibility improvements** for 6200+ problem descriptions at HackerRank, **fixing 2200+ issues in WYSIWYG-generated** content. Automated contrast, heading, and table fixes while collaborating with Deque Systems for a11y audits. Enhanced CKEditor to enforce alt text, semantic tables, and proper structure, improving screen reader compatibility.
-- Designed and customized VSCode **web IDE** for alignment with HackerRank’s design language, integrating features like error tracking and third-party cookie warnings to enhance functionality.
-- **Standardized iframe communication** using Penpal for consistent messaging across Screen and Interview platforms, while developing a React-based wrapper to simplify integration, improve documentation, and abstract internal implementation details for seamless adoption in React applications.
-- **Mentored** engineers (Interns to SDE-2), providing technical/debugging guidance, best practices, and feedback on code quality, architecture, and performance improvements, fostering their growth within the team.
-- Collaborated in **enhancing the hiring process** for Frontend engineers by actively being part of Interviews, working with content creators to develop questions that align with organizational values and required skills.
-- Led the planning and implementation of a new company initiative to integrate behavioral assessments alongside technical assessments, collaborating with the Product team to adapt existing flows in the Recruiters’ and HackerRank Screen platform ensuring seamless integration.
+Fresh out of college with a Metallurgical Engineering degree (yes, you read that right), I stepped into HackerRank as an intern. With more enthusiasm than experience, I was handed their internal UIKit to revitalize. I still remember the mix of excitement and terror when I realized I would be working on components used by other developers.
 
-### Software Development Engineer II
+During these three months, I built my first Toast notification component and created a React wrapper for CKEditor - not earth-shattering work, but it was *my* work. I also got my first taste of developer tooling by setting up linting configurations that would later become standards across the organization. Looking back, what seemed like simple tasks laid the foundation for what would become core strengths in my career.
 
-**HackerRank**, Bengaluru, India – (July 2020 - Dec 2021)
+Oh, and I once built an entire intern website overnight because our **CTO Hari** bet I couldn't do it. Spoiler: I did. ✌️
 
-- Led the effort to make HackerRank Screen **accessible** according to **WCAG 2.1 Level AA** standards, partnering with Deque Systems to develop the first Accessibility report, resolve complex widget issues, and maintain annual revisions for quality and compliance; opening accessibility-focused market opportunities with clients like U.S. government agencies.
-- Contributed to developing of **proctoring solutions**, including offline-ready photo capture using mediaDevices API, monitoring candidate engagement, tracking copy-paste events to detect suspicious behavior and increasing adoption among enterprise clients such as IBM.
-- Transitioned from a traditional polling architecture to a **Websocket**-based communication for **long-running** business critical **task** like ”Run test”, resulting in real-time updates, decreasing server load and latency during peak usage periods.
-- Enhanced the integration of che-theia IDE in HackerRank Interviews platform, optimizing live collaboration features, implementing visual overhauls, and improving the **discovery experience for Project-based questions** across various development stacks.
+### Finding My Footing: SDE-I (Aug 2018 - Jun 2020)
 
-### Software Development Engineer I
+As a full-time engineer, I was thrown into the deep end with the migration of HackerRank's Screen product from Backbone.js to React. This was my first experience with a large-scale migration, and it taught me more about application architecture than any course ever could.
 
-**HackerRank**, Bengaluru, India – (Aug 2018 - June 2020)
+During this time, I developed a passion for theming and dark mode implementation. What started as "Hey, can you look into adding a dark theme?" turned into leading organization-wide initiatives on standardizing our component library and ensuring theme consistency across products.
 
-- Played a pivotal role in re-designing HackerRank Screen product by **migrating from Backbone.js to React**, Redux, and Formik, contributing to various crucial flows like feedback, question views, and login/logout experience while incorporating Google Analytics and FullStory integrations for user pattern insights.
-- Developed **Dark mode** and **theming support** starting from atomic UI level components to leading the implementation of Dark theme support in HackerRank Screen.
-- Accelerated testing pipelines by **migrating to Jest**, introducing snapshot testing for visual reliability and reducing test execution time.
-- Directed **organization-wide** initiatives to **replace jQuery** with vanilla JavaScript and integrate Flow static type checker, boosting code quality and reducing runtime errors.
-- Demonstrated **expertise in UI-related projects**, such as ATS integrations, Candidate Search, and HackerRank application settings, including a complete migration of the Product settings page.
+One of my proudest achievements during this period was convincing the team to move away from jQuery. I remember making a presentation with far too many animated slides showcasing vanilla JavaScript alternatives. It wasn't just about following trends - it was about building a more maintainable codebase that would scale with our needs.
 
-### Software Development Intern
+### Growing Responsibilities: SDE-II (Jul 2020 - Dec 2021)
 
-**HackerRank**, Bengaluru, India – (Jun 2018 - Aug 2018)
+As I moved into a more senior role, the pandemic hit, and our priorities shifted. Remote work became the norm, and our platform needed to adapt to support remote hiring processes. This led to my work on proctoring solutions and improving communication between components in our platform.
 
-- Revitalized HackerRank's internal **UIKit** by incorporating **new design components**, updating theme variables, creating an **interactive playground** and developing innovative UI components such as Toast and a react wrapper for CKEditor.
-- Streamlined developer productivity through the integration of stylelint and eslint for consistent linting and formatting of style and JavaScript files.
-- Optimized the **CI/CD** pipeline by implementing **code quality checks**, **coverage reporting**, and introducing snapshot testing to bolster reliability in visual appearance cases.
+This was also when I first dove deep into accessibility. What started as a compliance requirement became a personal mission. I led the effort to make HackerRank Screen accessible according to WCAG 2.1 Level AA standards - a journey that transformed how I view software development. Working with Deque Systems on our first accessibility audit opened my eyes to the importance of inclusive design.
+
+The transition from polling architecture to WebSockets for our long-running tasks was another highlight - seeing real-time updates flow in smoothly during high-stress testing scenarios was immensely satisfying.
+
+### Leading and Mentoring: Senior Engineer (Jan 2022 - Apr 2024)
+
+My final role at HackerRank allowed me to focus on three areas I'm passionate about: accessibility, developer experience, and mentorship.
+
+I led accessibility improvements for over 6,200 problem descriptions, fixing issues in content that had been generated through WYSIWYG editors. This meant creating systems to identify, categorize, and fix problems at scale - work that directly impacted thousands of candidates using our platform.
+
+Customizing VSCode for our platform needs and standardizing iframe communication using Penpal allowed me to improve the developer experience both internally and for candidates using our platform.
+
+Perhaps most rewarding was mentoring younger engineers. Seeing them grow from struggling with basic React concepts to confidently shipping features gave me a sense of purpose beyond my own contributions.
+
+## Project Spotlights
+
+Rather than just listing responsibilities, I want to highlight specific projects that represent my approach to problem-solving and the impact of my work.
+
+### Accessibility Champion
+
+**Making the Web Work for Everyone**
+
+Accessibility wasn't originally my area of expertise - it became one out of necessity and grew into a passion. My work in this area spans:
+
+- **Screen Reader Compatibility**: Revamping our entire application to work seamlessly with screen readers, including complex components like code editors and timed assessments.
+- **Keyboard Navigation**: Implementing intuitive keyboard shortcuts and focus management across applications.
+- **Content Remediation**: Creating automated tools to fix accessibility issues in over 2,200 problem descriptions, focusing on table structures, image alt text, and proper heading hierarchies.
+- **Building for 400% Zoom**: Redesigning layouts to support users who need high magnification, ensuring functionality remained accessible at all zoom levels.
+
+The most rewarding moment was watching a Deque Systems accessibility tester navigate our platform at incredible speed using only a screen reader. It drove home that accessibility isn't about compliance - it's about people.
+
+<Button variant="outline" asChild>
+  <Link href="/blog/accessibility" className="no-underline">Read more about the journey with a11y <MoveUpRight /></Link>
+</Button>
+
+### Developer Tooling Craftsman
+
+**Smoothing the Development Experience**
+
+I've always believed that good developer tools make for better products. My work in this area includes:
+
+- **VSCode Customization**: Adapting the open-source VSCode editor to fit HackerRank's needs, from visual themes to specialized plugins for testing code.
+- **Cross-Frame Communication**: Standardizing messaging between iframes using Penpal, solving complex communication problems between our main application and embedded editors.
+- **Testing Infrastructure**: Migrating our test suite from Karma to Jest, reducing test run times and improving reliability.
+- **Error Tracking**: Implementing specialized instrumentation to collect performance metrics and error logs from embedded IDEs, giving us insights into candidate experience issues.
+
+### UI Systems Architect
+
+**Building Foundations for Consistent Experiences**
+
+Creating cohesive UI systems has been a thread throughout my career:
+
+- **Dark Mode Implementation**: Leading the effort to add dark theme support across our products, starting from basic component theming to a complete system supporting user preferences.
+- **Component Library Evolution**: Revitalizing HackerRank's internal UIKit with modern design components and creating interactive playgrounds for documentation.
+- **Design System Integration**: Working closely with designers to implement consistent patterns across applications while maintaining flexibility for different contexts.
+
+### Platform Performance Engineer
+
+**Making Things Fast When It Matters Most**
+
+Performance optimization became crucial as our platform scaled to handle high-stakes testing scenarios:
+
+- **WebSocket Migration**: Transitioning from polling to WebSockets for real-time updates during test execution, reducing latency and server load during peak usage.
+- **Responsive Design for All Devices**: Implementing adaptive layouts that work across devices and accessibility settings without sacrificing functionality.
+- **Load Testing and Optimization**: Identifying and resolving performance bottlenecks in our most critical user flows.
+
+### Mentor and Collaborator
+
+**Growing Together**
+
+Some of my most meaningful work hasn't been about code at all:
+
+- **Engineering Mentorship**: Guiding junior engineers from onboarding through to owning significant features, providing technical guidance and career advice.
+- **Hiring Process Improvements**: Collaborating with content creators to develop interview questions that better reflect real-world engineering challenges.
+- **Cross-Team Initiatives**: Leading projects that required coordination between engineering, product, and design teams, such as the integration of behavioral assessments alongside technical evaluations.
+
+Throughout all these projects, my approach has remained consistent: focus on the user experience, build for inclusivity, optimize for maintainability, and always keep learning.
 
 ## Skills
 

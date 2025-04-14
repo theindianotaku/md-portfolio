@@ -16,7 +16,7 @@ export function HeaderNav() {
     <NavigationMenu>
       <NavigationMenuList>
         <NavigationMenuItem>
-          <Link href="/#experience" legacyBehavior passHref>
+          <Link href="/#project-spotlights" legacyBehavior passHref>
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
               Experience
             </NavigationMenuLink>
