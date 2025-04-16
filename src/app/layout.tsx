@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Analytics } from '@vercel/analytics/next';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 import { Merriweather, Mona_Sans, IBM_Plex_Sans } from 'next/font/google';
 import './globals.css';
@@ -79,6 +80,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
