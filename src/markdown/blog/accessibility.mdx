@@ -3,7 +3,7 @@ title: My Journey with Accessibility
 description: Making Accessibility a Core Part of HackerRank's Product Experience
 date: 2024-05-24T19:14:23.792Z
 tags: ['accessibility', 'frontend', 'wcag']
-permalink: 'https://debaintech.vercel.app/blog/accessibility'
+permalink: 'https://debashish.me/blog/accessibility'
 siteName: 'Portfolio of Debashish - Senior Software Engineer, Frontend'
 ---
 
@@ -223,64 +223,61 @@ With 6,200+ questions in our library, manual fixes weren't feasible. I developed
 5. Updated CKEditor plugins to enforce accessibility in new content
 
 ```jsx
-// Example script for finding tables without headers
+// Script to identify and fix tables with missing headers
 const $ = cheerio.load(question);
-const table = $("table");
 
-for (let i = 0; i < table.length; i++) {
-  const currentTable = table.eq(i);
+// Find all tables without proper headers
+$("table").each((index, table) => {
+  const $table = $(table);
 
-  if (
-    currentTable.find("th").length === 0 &&
-    currentTable.find("thead").length === 0
-  ) {
-    // This table needs headers
+  // Check if table is missing headers
+  if ($table.find("th, thead").length === 0) {
+    // Add to list of tables needing fixes
     const tableId = tablesData.length + 1;
-    tablesData.push({
-      id: tableId,
-      questionId,
-      table: currentTable,
-    });
+    tablesData.push({ id: tableId, questionId, table: $table });
 
-    // Apply fix based on review data
-    const headerFixType = tableReviewDataArray[tableId - 1]["Header Type"];
+    // Apply appropriate header fix based on review data
+    const headerType = tableReviewDataArray[tableId - 1]["Header Type"];
+    const thead = $("<thead></thead>");
 
-    if (headerFixType === "Two Header") {
-      // Create a thead element and move the first two rows into it
-      const thead = $("<thead></thead>");
-      currentTable.find("tr:lt(2)").appendTo(thead);
-      currentTable.prepend(thead);
-      currentTable.attr("data-ally", "t-2h");
-    } else if (headerFixType === "One Header") {
-      const thead = $("<thead></thead>");
-      currentTable.find("tr:lt(1)").appendTo(thead);
-      currentTable.prepend(thead);
-      currentTable.attr("data-ally", "t-1h");
+    if (headerType === "Two Header") {
+      // Move first two rows to header
+      $table.find("tr:lt(2)").appendTo(thead);
+      $table.prepend(thead).attr("data-a11y", "t-2h");
+    } else if (headerType === "One Header") {
+      // Move just first row to header
+      $table.find("tr:lt(1)").appendTo(thead);
+      $table.prepend(thead).attr("data-a11y", "t-1h");
     }
   }
-}
+});
 ```
+
+> [!NOTE]
+> 1. Mark tables fixed by our accessibility initiative
+> 2. Indicate which fix type was applied (t-1h = one header, t-2h = two headers)
+> 3. Support future auditing and reporting on our accessibility improvements
 
 The most common issue was GIFs without proper accessibility. We created a solution to wrap GIFs in collapsible content with proper controls:
 
 ```jsx
-function getGIFCollapsible(content, detailsAttributeList = []) {
-  return `<style type="text/css">
-  details[open] > summary > .section-title-gif-hide, details > summary > .section-title-gif-show { display: inline; }
-  details > summary > .section-title-gif-hide, details[open] > summary > .section-title-gif-show { display: none; }
-  .section-title-gif.section-title-gif.section-title-gif { display: inline-block; background: transparent; color: inherit;
-  cursor: pointer; text-decoration: underline; margin-top: 4px; margin-bottom: 4px; padding: 8px; }
-  </style>
-  <details open="open" ${detailsAttributeList.join(" ")}
-    ${A11Y_ATTRIBUTE_NAME}="${A11Y_ATTRIBUTE_VALUE.DETAILS_SUMMARY_GIF}">
-    <summary class="section-title section-title-gif">
-      <span class="section-title-gif-hide">Hide animation</span>
-      <span class="section-title-gif-show">Show animation</span>
-    </summary>
-    <div class="collapsable-details">
+function getGIFCollapsible(content) {
+  return `
+    <style>
+      /* Toggle visibility of "Show"/"Hide" labels based on state */
+      details[open] .hide-label { display: inline; }
+      details:not([open]) .show-label { display: inline; }
+      details[open] .show-label, details:not([open]) .hide-label { display: none; }
+    </style>
+
+    <details open data-a11y="gif-control">
+      <summary>
+        <span class="hide-label">Hide animation</span>
+        <span class="show-label">Show animation</span>
+      </summary>
       ${content}
-    </div>
-  </details>`;
+    </details>
+  `;
 }
 ```
 

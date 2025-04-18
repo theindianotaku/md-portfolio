@@ -149,6 +149,16 @@
   figcaption {
     font-family: var(--font-sans);
   }
+
+  pre {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  code {
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
 }
 
 @layer components {
@@ -207,6 +217,8 @@
   .prose {
     --tw-prose-bold: var(--tw-prose-body);
 
+    min-width: 0;
+
     h1,
     h2,
     h3,
@@ -217,6 +229,21 @@
 
       font-family: var(--font-serif);
       font-weight: var(--font-weight-light);
+    }
+
+    h2 {
+      margin-top: 1.5em;
+      margin-bottom: 0.5em;
+    }
+
+    pre {
+      padding: 0;
+    }
+
+    .markdown-alert {
+      li {
+        margin-bottom: 0;
+      }
     }
   }
 }

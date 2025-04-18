@@ -104,7 +104,7 @@ title: My New Blog Post
 description: A short description of the post
 date: 2024-06-01T12:00:00.000Z
 tags: ['tag1', 'tag2']
-permalink: 'https://debaintech.vercel.app/blog/my-new-post'
+permalink: 'https://debashish.me/blog/my-new-post'
 siteName: 'Portfolio of Debashish - Senior Software Engineer, Frontend'
 ---
 

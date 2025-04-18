@@ -12,7 +12,9 @@ export default async function BlogIndexPage() {
 
   return (
     <div className="container mx-auto py-8 h-[calc(100%-94.5px)]">
-      <h1 className="text-4xl font-bold mb-8">Blogs Directory</h1>
+      <h1 className="text-2xl md:text-3xl text-highlight mb-8">
+        Blogs Directory
+      </h1>
 
       <div className="space-y-8">
         {posts.map((post) => (

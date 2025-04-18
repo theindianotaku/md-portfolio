@@ -4,11 +4,13 @@ import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 
 import { Merriweather, Mona_Sans, IBM_Plex_Sans } from 'next/font/google';
-import './globals.css';
 
 import { ThemeProvider } from 'next-themes';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
+
+import './globals.css';
+import 'rehype-github-alerts/styling/css/index.css';
 
 const sansFont = IBM_Plex_Sans({
   variable: '--font-sans',
@@ -35,7 +37,7 @@ export const metadata: Metadata = {
     type: 'profile',
     title: 'Debashish Nayak',
     description: `Debashish's Portfolio - Senior Software Engineer, Frontend`,
-    url: 'https://debaintech.vercel.app/',
+    url: 'https://debashish.me/',
   },
 };
 
@@ -48,8 +50,8 @@ export default function RootLayout({
     '@context': 'https://schema.org',
     '@type': 'Person',
     name: 'Debashish Nayak',
-    url: 'https://debaintech.vercel.app',
-    image: 'https://debaintech.vercel.app/opengraph-image.png',
+    url: 'https://debashish.me',
+    image: 'https://debashish.me/opengraph-image.png',
     jobTitle: 'Frontend Engineer',
     description: 'Building Clean & Accessible Web Experiences.',
     sameAs: [
@@ -61,6 +63,12 @@ export default function RootLayout({
 
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
+      <head>
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.0/styles/a11y-dark.min.css"
+        />
+      </head>
       <body
         className={`${sansFont.variable} ${serifFont.variable} ${monaSansFont.variable} antialiased min-h-screen`}
       >

@@ -47,10 +47,12 @@ export default async function BlogPostPage({ params }: { params: pParams }) {
     const { default: Content, frontmatter } = PostModule;
 
     return (
-      <div className="container mx-auto py-8">
+      <div className="flex flex-col justify-center items-start md:items-center py-10 mx-auto">
         <article>
           <header className="mb-8">
-            <h1 className="text-4xl font-bold mb-2">{frontmatter.title}</h1>
+            <h1 className="text-2xl md:text-3xl font-bold mb-2">
+              {frontmatter.title}
+            </h1>
             {frontmatter.description && (
               <p className="text-xl text-muted-foreground mb-4">
                 {frontmatter.description}
@@ -81,7 +83,7 @@ export default async function BlogPostPage({ params }: { params: pParams }) {
             )}
           </header>
 
-          <div className="prose dark:prose-invert max-w-none">
+          <div className="max-w-none px-5">
             <Content />
           </div>
         </article>
