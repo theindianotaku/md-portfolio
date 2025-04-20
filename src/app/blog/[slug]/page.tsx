@@ -2,6 +2,7 @@
 import { notFound } from 'next/navigation';
 import { getBlogSlugs } from '@/lib/blog';
 import { MDXComponent, pParams } from '@/types/types';
+import TableOfContents from '@/components/table-of-contents';
 
 // Generate static paths at build time
 export async function generateStaticParams() {
@@ -44,11 +45,11 @@ export default async function BlogPostPage({ params }: { params: pParams }) {
     const PostModule: MDXComponent = await import(
       `@/markdown/blog/${slug}.mdx`
     );
-    const { default: Content, frontmatter } = PostModule;
+    const { default: Content, frontmatter, tableOfContents } = PostModule;
 
     return (
-      <div className="flex flex-col justify-center items-start md:items-center py-10 mx-auto">
-        <article>
+      <main className="flex flex-col justify-center items-start md:items-center py-10">
+        <article className="content-wrapper flex flex-col items-center">
           <header className="mb-8">
             <h1 className="text-2xl md:text-3xl font-bold mb-2">
               {frontmatter.title}
@@ -83,11 +84,18 @@ export default async function BlogPostPage({ params }: { params: pParams }) {
             )}
           </header>
 
-          <div className="max-w-none px-5">
-            <Content />
+          <div className="w-full lg:flex lg:flex-row">
+            <div className="lg:flex-1">
+              <div className="flex flex-col items-center max-w-none">
+                <Content />
+              </div>
+            </div>
+            {tableOfContents && tableOfContents.length > 0 && (
+              <TableOfContents items={tableOfContents} className="mt-20" />
+            )}
           </div>
         </article>
-      </div>
+      </main>
     );
   } catch (error) {
     console.error(`Failed to load blog post: ${slug}`, error);

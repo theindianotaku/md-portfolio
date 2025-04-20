@@ -1,4 +1,4 @@
-import { ModeToggle } from './toggle-theme';
+import { ThemeToggle } from './toggle-theme';
 import { HeaderNav } from './nav-menu';
 import Logo from './logo';
 import Link from 'next/link';
@@ -9,7 +9,11 @@ const Header = () => {
       <nav className="w-full flex flex-row items-center justify-between px-2.5 md:px-10">
         <div className="flex flex-row items-center gap-2.5 md:gap-5">
           <div className="flex size-8 md:size-16">
-            <Link href="/">
+            <Link
+              href="/"
+              className="border-2 border-dashed border-transparent hover:border-accent rounded"
+            >
+              <span className="sr-only">Go to Portfolio Home Page</span>
               <Logo className="text-foreground size-8 md:size-16" />
             </Link>
           </div>
@@ -30,7 +34,7 @@ const Header = () => {
 
         <div className="flex items-center gap-2.5 md:gap-5">
           <HeaderNav />
-          <ModeToggle />
+          <ThemeToggle />
         </div>
       </nav>
     </div>

@@ -6,8 +6,8 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --emerald-green: #00674f;
-  --jade-green: #00bb77;
+  --emerald-green: oklch(0.46 0.090756 169.6887);
+  --jade-green: oklch(0.7 0.1617 158.56);
 
   --highlight-accent: var(--jade-green);
 
@@ -22,7 +22,8 @@
   --secondary: oklch(0.967 0.001 286.375);
   --secondary-foreground: oklch(0.21 0.006 285.885);
   --muted: oklch(0.967 0.001 286.375);
-  --muted-foreground: oklch(0.552 0.016 285.938);
+  /* --muted-foreground: oklch(0.552 0.016 285.938); */
+  --muted-foreground: oklch(0.44 0.0189 146.12);
   --accent: var(--highlight-accent);
   --accent-foreground: var(--foreground);
   --destructive: oklch(0.577 0.245 27.325);
@@ -48,8 +49,8 @@
 
 .dark {
   --highlight-accent: var(--emerald-green);
-  --background: #252525;
-  --foreground: #fffafa;
+  --background: oklch(0.26 0 0);
+  --foreground: oklch(0.99 0.0053 17.25);
   --card: oklch(0.141 0.005 285.823);
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.141 0.005 285.823);
@@ -162,6 +163,10 @@
 }
 
 @layer components {
+  .content-wrapper {
+    @apply gap-5 w-full max-w-[1200px] px-5 md:px-10 lg:flex lg:flex-row;
+  }
+
   .icon {
     position: absolute;
     height: 100%;

@@ -3,15 +3,14 @@ import Link from 'next/link';
 import ResumeContent, { tableOfContents } from '@/markdown/resume-content.mdx';
 import { Button } from '@/components/ui/button';
 import { MoveDownRight, MoveUpRight } from 'lucide-react';
+import TableOfContents from '@/components/table-of-contents';
 
 import debashishImage from '@/assets/images/hero-v2.png';
 
-console.log(`Console ~ tableOfContents:`, tableOfContents);
-
 export default function Home() {
   return (
-    <main className="flex flex-col justify-center items-start md:items-center py-10">
-      <div className="flex flex-col-reverse items-center px-5 gap-10 md:flex-row md:justify-between md:gap-5">
+    <main className="flex flex-col justify-center items-center py-10">
+      <div className="flex flex-col-reverse items-center px-5 md:px-10 gap-10 md:flex-row md:justify-between md:gap-5">
         <div className="flex flex-col items-center justify-center prose dark:prose-invert md:items-start">
           <h1 className="font-light leading-normal text-2xl text-center md:text-3xl md:text-left">
             <span className="sr-only">Debashish Nayak</span>Building{' '}
@@ -43,44 +42,11 @@ export default function Home() {
           <Image src={debashishImage} alt="Debashish's photo" />
         </div>
       </div>
-      <div className="relative flex flex-row-reverse gap-5 px-10">
-        {/* <aside className="sticky w-[300px] max-h-[calc(100vh-100px)] overflow-x-auto p-4 items-start top-5">
-          <span>Table of contents</span>
-          <ul className="toc">
-            <li>
-              <Link href="#about-me">About Me</Link>
-            </li>
-            <li>
-              <Link href="#project-spotlights">Experience</Link>
-              <ul>
-                <li>
-                  <Link href="#random">Senior Software Engineer</Link>
-                </li>
-                <li>
-                  <Link href="#random">Software Engineer II</Link>
-                </li>
-                <li>
-                  <Link href="#random">Software Engineer I</Link>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <Link href="#project-spotlights">Achievements & Accolades</Link>
-              <ul>
-                <li>
-                  <Link href="#random">Senior Software Engineer</Link>
-                </li>
-                <li>
-                  <Link href="#random">Software Engineer II</Link>
-                </li>
-                <li>
-                  <Link href="#random">Software Engineer I</Link>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </aside> */}
-        <ResumeContent />
+      <div className="relative flex flex-row-reverse justify-center w-full max-w-[1200px] px-5 md:px-10 lg:flex lg:flex-row">
+        <div className="lg:flex-1">
+          <ResumeContent />
+        </div>
+        <TableOfContents items={tableOfContents} className="mt-20" />
       </div>
     </main>
   );

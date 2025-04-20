@@ -3,5 +3,5 @@ declare module '*.mdx' {
   import type { Toc } from '@stefanprobst/rehype-extract-toc';
 
   export const tableOfContents: Toc;
-  export default function MDXContent(props: MDXProps): JSX.Element;
+  export default function MDXComponent(props: MDXProps): JSX.Element;
 }

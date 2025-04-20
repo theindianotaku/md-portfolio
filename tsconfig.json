@@ -29,6 +29,7 @@
     ".next/types/**/*.ts",
     "src/types/mdx.d.ts",
     "tailwind.config.mjs",
+    "src/types/**/*.d.ts",
     "next.config.mjs"
   ],
   "exclude": ["node_modules"]

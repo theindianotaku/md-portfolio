@@ -11,7 +11,7 @@ export default async function BlogIndexPage() {
   const posts = await getAllBlogPostsMetadata();
 
   return (
-    <div className="container mx-auto py-8 h-[calc(100%-94.5px)]">
+    <main className="container mx-auto py-8 h-[calc(100%-94.5px)]">
       <h1 className="text-2xl md:text-3xl text-highlight mb-8">
         Blogs Directory
       </h1>
@@ -57,6 +57,6 @@ export default async function BlogIndexPage() {
           </article>
         ))}
       </div>
-    </div>
+    </main>
   );
 }
