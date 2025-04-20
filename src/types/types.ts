@@ -1,4 +1,5 @@
 import type { ElementType } from 'react';
+import type { Toc } from '@stefanprobst/rehype-extract-toc';
 
 export type MDXComponent = {
   default: ElementType;
@@ -10,6 +11,7 @@ export type MDXComponent = {
     permalink: string;
     siteName: string;
   };
+  tableOfContents: Toc;
 };
 
 export type pParams = Promise<{ slug: string[] }>;

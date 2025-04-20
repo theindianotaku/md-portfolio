@@ -12,15 +12,10 @@ import { Button } from '@/components/ui/button';
 import { List } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-type TOCItem = {
-  depth: number;
-  value: string;
-  id: string;
-  children?: TOCItem[];
-};
+import type { TocEntry, Toc } from '@stefanprobst/rehype-extract-toc';
 
 type TableOfContentsProps = {
-  items: TOCItem[];
+  items: Toc;
   className?: string;
 };
 
@@ -32,7 +27,7 @@ const TOCLink = ({
   isActive,
   onClick,
 }: {
-  item: TOCItem;
+  item: TocEntry;
   isActive: boolean;
   onClick?: () => void;
 }) => {
@@ -77,7 +72,7 @@ const RenderTOCItems = ({
   activeId,
   onClick,
 }: {
-  items: TOCItem[];
+  items: Toc;
   activeId: string;
   onClick?: () => void;
 }) => {
@@ -98,7 +93,7 @@ const RenderTOCItems = ({
 /**
  * Mobile drawer view of the table of contents
  */
-const MobileTOC = ({ items }: { items: TOCItem[] }) => {
+const MobileTOC = ({ items }: { items: Toc }) => {
   const [activeId, setActiveId] = useState<string>('');
   const [isOpen, setIsOpen] = useState(false);
 
@@ -167,7 +162,7 @@ const DesktopTOC = ({
   items,
   className,
 }: {
-  items: TOCItem[];
+  items: Toc;
   className?: string;
 }) => {
   const [activeId, setActiveId] = useState<string>('');
