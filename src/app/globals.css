@@ -163,6 +163,10 @@
 }
 
 @layer components {
+  .main {
+    @apply flex flex-col justify-center items-center py-10;
+  }
+
   .content-wrapper {
     @apply gap-5 w-full max-w-[1200px] px-5 md:px-10 lg:flex lg:flex-row;
   }
@@ -230,7 +234,7 @@
     h4,
     h5,
     h6 {
-      @apply relative;
+      @apply relative scroll-mt-12 md:scroll-mt-32;
 
       font-family: var(--font-serif);
       font-weight: var(--font-weight-light);

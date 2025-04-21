@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import {
   Drawer,
   DrawerHeader,
@@ -35,8 +36,8 @@ const TOCLink = ({
 
   return (
     <li key={item.id} className={cn('mb-2', indent)}>
-      <a
-        href={`#${item.id}`}
+      <Link
+        href={`/#${item.id}`}
         onClick={onClick}
         className={cn(
           'text-sm decoration-accent underline-offset-4 line-clamp-1 hover:underline',
@@ -44,7 +45,7 @@ const TOCLink = ({
         )}
       >
         {item.value}
-      </a>
+      </Link>
 
       {item.children && item.children.length > 0 && (
         <ul className="mt-2 ml-4">
@@ -195,7 +196,7 @@ const DesktopTOC = ({
 
   return (
     <aside className={cn('hidden lg:block w-64 flex-shrink-0 ', className)}>
-      <div className="sticky top-24 max-h-[calc(100vh-120px)] overflow-y-auto p-4 border-y-2 border-highlight-accent border-dashed text-muted-foreground">
+      <div className="sticky top-40 max-h-[calc(100vh-120px)] overflow-y-auto p-4 border-y-2 border-highlight-accent border-dashed text-muted-foreground">
         <h3 className="text-md font-bold mb-4">Table of Contents</h3>
         <RenderTOCItems items={items} activeId={activeId} />
       </div>

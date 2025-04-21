@@ -32,7 +32,7 @@ export function ThemeToggle() {
     // Render a placeholder to prevent layout shift
     return (
       <Button
-        variant="outline"
+        variant="ghost"
         size="icon"
         className="w-9 h-9"
         disabled
@@ -49,7 +49,7 @@ export function ThemeToggle() {
 
   return (
     <Button
-      variant="outline"
+      variant="ghost"
       size="icon"
       onClick={toggleTheme}
       onKeyDown={handleKeyDown}

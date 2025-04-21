@@ -70,7 +70,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${sansFont.variable} ${serifFont.variable} ${monaSansFont.variable} antialiased min-h-screen`}
+        className={`${sansFont.variable} ${serifFont.variable} ${monaSansFont.variable} antialiased min-h-screen pt-10 md:pt-30`}
       >
         <ThemeProvider
           defaultTheme="dark"
@@ -79,7 +79,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Header />
-          <div className="flex flex-col grow h-[calc(100vh-2.5rem)] md:h-[calc(100vh-7.5rem)] overflow-y-auto">
+          <div className="flex flex-col">
             {children}
             <Footer />
           </div>

@@ -9,7 +9,7 @@ import debashishImage from '@/assets/images/hero-v2.png';
 
 export default function Home() {
   return (
-    <main className="flex flex-col justify-center items-center py-10">
+    <main className="main">
       <div className="flex flex-col-reverse items-center px-5 md:px-10 gap-10 md:flex-row md:justify-between md:gap-5">
         <div className="flex flex-col items-center justify-center prose dark:prose-invert md:items-start">
           <h1 className="font-light leading-normal text-2xl text-center md:text-3xl md:text-left">

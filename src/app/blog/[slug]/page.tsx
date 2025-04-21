@@ -48,7 +48,7 @@ export default async function BlogPostPage({ params }: { params: pParams }) {
     const { default: Content, frontmatter, tableOfContents } = PostModule;
 
     return (
-      <main className="flex flex-col justify-center items-start md:items-center py-10">
+      <main className="main">
         <article className="content-wrapper flex flex-col items-center">
           <header className="mb-8">
             <h1 className="text-2xl md:text-3xl font-bold mb-2">

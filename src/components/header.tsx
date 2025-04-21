@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 const Header = () => {
   return (
-    <div className="h-10 md:h-30 flex justify-center w-full z-10 bg-custom-theme border-b border-highlight-accent-900/50">
+    <div className="h-10 md:h-30 flex justify-center w-full z-10 bg-custom-theme border-b border-highlight-accent-900/50 fixed top-0 left-0">
       <nav className="w-full flex flex-row items-center justify-between px-2.5 md:px-10">
         <div className="flex flex-row items-center gap-2.5 md:gap-5">
           <div className="flex size-8 md:size-16">
@@ -32,7 +32,7 @@ const Header = () => {
           </div>
         </div>
 
-        <div className="flex items-center gap-2.5 md:gap-5">
+        <div className="flex items-center gap-2.5">
           <HeaderNav />
           <ThemeToggle />
         </div>
