@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Script from 'next/script';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import UtmScriptCleaner from '@/components/scripts/utm-script-cleaner';
 
 import { Merriweather, Mona_Sans, IBM_Plex_Sans } from 'next/font/google';
 
@@ -102,6 +103,7 @@ export default function RootLayout({
             gtag('config', 'G-BCQHZKFF17');
           `}
         </Script>
+        <UtmScriptCleaner />
       </body>
     </html>
   );
