@@ -30,7 +30,7 @@ export default function Home() {
               <Link
                 target="_blank"
                 rel="noopener noreferrer"
-                href="https://drive.google.com/file/d/1rXhHgc5TBWOW5SHVTECS6vEFFneWsWOX/view"
+                href="https://drive.google.com/file/d/1LfMmu1O5penttYvavA9cdC2lvFASm7_m/view"
                 className="no-underline"
               >
                 My Resume <MoveUpRight />
