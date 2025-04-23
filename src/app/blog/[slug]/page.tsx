@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { getBlogSlugs } from '@/lib/blog';
 import { MDXComponent, pParams } from '@/types/types';
 import TableOfContents from '@/components/table-of-contents';
+import { Badge } from '@/components/ui/badge';
 
 // Generate static paths at build time
 export async function generateStaticParams() {
@@ -73,12 +74,7 @@ export default async function BlogPostPage({ params }: { params: pParams }) {
             {frontmatter.tags && frontmatter.tags.length > 0 && (
               <div className="flex flex-wrap gap-2 mt-4">
                 {frontmatter.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="px-2 py-1 bg-secondary text-secondary-foreground rounded-md text-xs"
-                  >
-                    {tag}
-                  </span>
+                  <Badge key={tag}>{tag}</Badge>
                 ))}
               </div>
             )}

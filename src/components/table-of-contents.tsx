@@ -8,6 +8,7 @@ import {
   DrawerTitle,
   DrawerContent,
   DrawerTrigger,
+  DrawerDescription,
 } from '@/components/ui/drawer';
 import { Button } from '@/components/ui/button';
 import { List } from 'lucide-react';
@@ -37,7 +38,7 @@ const TOCLink = ({
   return (
     <li key={item.id} className={cn('mb-2', indent)}>
       <Link
-        href={`/#${item.id}`}
+        href={`#${item.id}`}
         onClick={onClick}
         className={cn(
           'text-sm decoration-accent underline-offset-4 line-clamp-1 hover:underline',
@@ -142,6 +143,9 @@ const MobileTOC = ({ items }: { items: Toc }) => {
             <DrawerTitle className="text-muted-foreground">
               Table of Contents
             </DrawerTitle>
+            <DrawerDescription className="sr-only">
+              Navigation links to sections of the current page
+            </DrawerDescription>
           </DrawerHeader>
           <div className="p-4 pb-0">
             <RenderTOCItems

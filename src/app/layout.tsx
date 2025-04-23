@@ -63,7 +63,7 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en" className="dark" suppressHydrationWarning>
+    <html lang="en" className="dark h-full" suppressHydrationWarning>
       <head>
         <link
           rel="stylesheet"
@@ -71,7 +71,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${sansFont.variable} ${serifFont.variable} ${monaSansFont.variable} antialiased min-h-screen pt-10 md:pt-30`}
+        className={`${sansFont.variable} ${serifFont.variable} ${monaSansFont.variable} antialiased flex flex-col min-h-screen pt-10 md:pt-30`}
       >
         <ThemeProvider
           defaultTheme="dark"
@@ -80,7 +80,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Header />
-          <div className="flex flex-col">
+          <div className="flex flex-col flex-grow">
             {children}
             <Footer />
           </div>
