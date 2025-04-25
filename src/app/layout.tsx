@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Script from 'next/script';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import GrainShapes from '@/components/grain-shape';
 import UtmScriptCleaner from '@/components/scripts/utm-script-cleaner';
 
 import { Merriweather, Mona_Sans, IBM_Plex_Sans } from 'next/font/google';
@@ -71,7 +72,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${sansFont.variable} ${serifFont.variable} ${monaSansFont.variable} antialiased flex flex-col min-h-screen pt-10 md:pt-30`}
+        className={`${sansFont.variable} ${serifFont.variable} ${monaSansFont.variable} antialiased flex flex-col min-h-screen`}
       >
         <ThemeProvider
           defaultTheme="dark"
@@ -79,8 +80,9 @@ export default function RootLayout({
           attribute="class"
           disableTransitionOnChange
         >
+          <GrainShapes count={10} />
           <Header />
-          <div className="flex flex-col flex-grow">
+          <div className="flex flex-col flex-grow pt-10 md:pt-30">
             {children}
             <Footer />
           </div>
