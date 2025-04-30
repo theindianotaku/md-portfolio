@@ -4,6 +4,7 @@ import * as React from 'react';
 import { Moon, Sun } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { Button } from '@/components/ui/button';
+import { motion } from 'framer-motion';
 
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme();
@@ -56,23 +57,18 @@ export function ThemeToggle() {
       aria-label={`Switch to ${targetTheme} theme, current theme is ${currentTheme}`}
       className="relative w-9 h-9 overflow-hidden"
     >
-      {/* Sun icon - visible in dark mode */}
-      <Sun
-        className={`h-[1.2rem] w-[1.2rem] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-300 ${
-          theme === 'dark'
-            ? 'opacity-100 transform rotate-0 scale-100'
-            : 'opacity-0 transform rotate-90 scale-0'
-        }`}
-      />
-
-      {/* Moon icon - visible in light mode */}
-      <Moon
-        className={`h-[1.2rem] w-[1.2rem] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-300 ${
-          theme === 'light'
-            ? 'opacity-100 transform rotate-0 scale-100'
-            : 'opacity-0 transform -rotate-90 scale-0'
-        }`}
-      />
+      <motion.div
+        initial={false}
+        animate={{ rotate: theme === 'dark' ? 0 : 360 }}
+        transition={{ type: 'spring', stiffness: 100, damping: 10 }}
+        className="inset-0 flex items-center justify-center"
+      >
+        {theme === 'dark' ? (
+          <Sun className="h-[1.2rem] w-[1.2rem]" />
+        ) : (
+          <Moon className="h-[1.2rem] w-[1.2rem]" />
+        )}
+      </motion.div>
     </Button>
   );
 }
