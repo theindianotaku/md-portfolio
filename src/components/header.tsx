@@ -9,12 +9,9 @@ const Header = () => {
       <nav className="w-full flex flex-row items-center justify-between px-2.5 md:px-10">
         <div className="flex flex-row items-center gap-2.5 md:gap-5">
           <div className="flex size-8 md:size-16">
-            <Link
-              href="/"
-              className="border-2 border-dashed border-transparent hover:border-accent rounded"
-            >
+            <Link href="/" className="main-logo-link">
               <span className="sr-only">Go to Portfolio Home Page</span>
-              <Logo className="text-foreground size-8 md:size-16" />
+              <Logo className="text-foreground size-8 md:size-16 main-logo" />
             </Link>
           </div>
           <div className="flex flex-col items-start">

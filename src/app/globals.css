@@ -203,6 +203,78 @@
     @apply flex items-center gap-2 underline underline-offset-6 transition-all hover:underline-offset-4 hover:decoration-accent;
   }
 
+  .main-logo {
+    position: relative;
+    z-index: 1;
+    fill: var(--accent);
+    transition:
+      transform 0.1s ease-in-out,
+      fill 0.1s ease-in-out,
+      background-color 0.1s ease-in-out;
+  }
+
+  .main-logo:hover {
+    transform: scale(1.1) rotate(5deg);
+    fill: var(--foreground);
+  }
+
+  .main-logo-link {
+    position: relative;
+    z-index: 1;
+  }
+
+  .main-logo-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--background);
+    clip-path: polygon(
+      53.475% 27.438%,
+      53.475% 27.438%,
+      48.861% 31.776%,
+      42.898% 38.629%,
+      36.156% 47.296%,
+      29.204% 57.08%,
+      22.609% 67.278%,
+      16.942% 77.191%,
+      12.771% 86.12%,
+      10.665% 93.365%,
+      11.193% 98.224%,
+      14.924% 100%,
+      14.924% 100%,
+      21.769% 99.574%,
+      30.802% 98.36%,
+      41.343% 96.452%,
+      52.709% 93.946%,
+      64.216% 90.936%,
+      75.183% 87.518%,
+      84.928% 83.787%,
+      92.767% 79.838%,
+      98.019% 75.766%,
+      100% 71.666%,
+      100% 71.666%,
+      99.131% 66.864%,
+      96.513% 60.929%,
+      92.487% 54.317%,
+      87.394% 47.485%,
+      81.573% 40.889%,
+      75.366% 34.986%,
+      69.112% 30.233%,
+      63.152% 27.086%,
+      57.826% 26.002%,
+      53.475% 27.438%
+    );
+    z-index: 0;
+    transition: background-color 0.1s ease-in-out;
+  }
+
+  .main-logo-link:hover::before {
+    background-color: var(--accent);
+  }
+
   .header-shadow {
     box-shadow:
       0 4px 6px -1px rgba(0, 0, 0, 0.1),
