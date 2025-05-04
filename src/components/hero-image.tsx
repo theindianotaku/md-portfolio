@@ -12,6 +12,7 @@ const HeroImage = () => {
         height={desktopWebP.height}
         className="object-cover"
         sizes="(min-width: 768px) 37.5vw, 90vw"
+        priority
       />
     </div>
   );
