@@ -20,6 +20,16 @@ const nextConfig = {
   experimental: {
     mdxRs: false,
   },
+  async redirects() {
+    return [
+      {
+        source: '/resume',
+        destination:
+          'https://raw.githubusercontent.com/theindianotaku/resume/main/src/Debashish_Nayak_Resume.pdf',
+        permanent: true,
+      },
+    ];
+  },
 };
 
 const withMdx = nextMdx({
