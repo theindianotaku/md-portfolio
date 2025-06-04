@@ -3,7 +3,7 @@
 import * as React from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Briefcase, BookOpen } from 'lucide-react';
+import { Briefcase, PenTool, User } from 'lucide-react';
 
 export function HeaderNav() {
   return (
@@ -15,9 +15,15 @@ export function HeaderNav() {
         </Link>
       </Button>
       <Button variant="ghost" size="sm" asChild>
-        <Link href="/blog" className="no-underline">
-          <span className="sr-only sm:not-sr-only">Blog</span>{' '}
-          <BookOpen className="sm:sr-only not-sr-only" />
+        <Link href="/writings" className="no-underline">
+          <span className="sr-only sm:not-sr-only">Writings</span>{' '}
+          <PenTool className="sm:sr-only not-sr-only" />
+        </Link>
+      </Button>
+      <Button variant="ghost" size="sm" asChild>
+        <Link href="/about" className="no-underline">
+          <span className="sr-only sm:not-sr-only">About</span>{' '}
+          <User className="sm:sr-only not-sr-only" />
         </Link>
       </Button>
     </div>

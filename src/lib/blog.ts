@@ -1,4 +1,3 @@
-// src/lib/blog.ts
 import fs from 'fs';
 import path from 'path';
 
@@ -49,3 +48,8 @@ export async function getAllBlogPostsMetadata(): Promise<BlogPostMetadata[]> {
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
   );
 }
+
+// Alternative function names for clarity (you can gradually migrate to these)
+export const getWritingSlugs = getBlogSlugs;
+export const getWritingMetadata = getBlogPostMetadata;
+export const getAllWritingsMetadata = getAllBlogPostsMetadata;
