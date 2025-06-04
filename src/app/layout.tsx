@@ -5,7 +5,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 import GrainShapes from '@/components/grain-shape';
 import UtmScriptCleaner from '@/components/scripts/utm-script-cleaner';
 
-import { Merriweather, Mona_Sans, IBM_Plex_Sans } from 'next/font/google';
+import { Merriweather, IBM_Plex_Sans } from 'next/font/google';
 
 import { ThemeProvider } from 'next-themes';
 import Header from '@/components/header';
@@ -24,12 +24,6 @@ const serifFont = Merriweather({
   variable: '--font-serif',
   subsets: ['latin'],
   weight: ['300', '400', '900'],
-});
-
-const monaSansFont = Mona_Sans({
-  variable: '--font-mono',
-  subsets: ['latin'],
-  weight: ['400'],
 });
 
 export const metadata: Metadata = {
@@ -72,7 +66,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${sansFont.variable} ${serifFont.variable} ${monaSansFont.variable} antialiased flex flex-col min-h-screen`}
+        className={`${sansFont.variable} ${serifFont.variable} antialiased flex flex-col min-h-screen`}
       >
         <ThemeProvider
           defaultTheme="dark"

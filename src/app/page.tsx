@@ -28,7 +28,7 @@ export default function Home() {
               <Link
                 target="_blank"
                 rel="noopener noreferrer"
-                href="https://raw.githubusercontent.com/theindianotaku/resume/main/src/Debashish_Nayak_Resume.pdf"
+                href="/resume"
                 className="no-underline"
               >
                 My Resume <MoveUpRight />

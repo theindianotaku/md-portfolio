@@ -50,7 +50,7 @@ const Footer = () => {
             </a>
             <Button variant="outline" asChild className="ml-0 md:ml-2">
               <a
-                href="https://drive.google.com/file/d/1rXhHgc5TBWOW5SHVTECS6vEFFneWsWOX/view"
+                href="/resume"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2"
