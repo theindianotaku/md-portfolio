@@ -21,7 +21,7 @@ export default function Home() {
           {/* Brief Introduction */}
           <p className="text-lg text-center md:text-left mt-4 mb-6 max-w-2xl leading-relaxed">
             Frontend Engineer with 6 years of experience crafting accessible, scalable web solutions. 
-            Passionate about inclusive design and developer experience at HackerRank.
+            After a refreshing break, I'm back and ready for new challenges in inclusive design and developer experience.
           </p>
           
           <div className="flex flex-wrap gap-4">
