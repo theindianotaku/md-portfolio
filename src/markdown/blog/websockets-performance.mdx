@@ -1,0 +1,459 @@
+---
+title: From Polling to WebSockets - Real-time Performance at Scale
+description: Transforming HackerRank's real-time architecture from inefficient polling to robust WebSocket implementation for high-stakes testing scenarios.
+date: 2024-06-04T12:00:00.000Z
+tags: ['websockets', 'performance', 'real-time', 'project-deep-dive']
+permalink: 'https://debashish.me/writings/websockets-performance'
+siteName: 'Portfolio of Debashish - Senior Software Engineer, Frontend'
+---
+
+import MdxLayout from '@/components/mdx-layout';
+
+## Introduction
+
+Real-time updates in web applications often start simple—a few API calls here and there. But when your platform handles high-stakes technical assessments with thousands of concurrent users, those simple polling mechanisms quickly become bottlenecks. This is the story of how we transformed HackerRank's real-time architecture from a polling-based system to a robust WebSocket implementation.
+
+## The Problem
+
+### Original Architecture: Polling Everything
+
+When I joined the team, our real-time updates worked like this:
+
+```javascript
+// The old way - polling every few seconds
+setInterval(() => {
+  fetch('/api/test-status')
+    .then(response => response.json())
+    .then(status => updateUI(status));
+}, 3000);
+```
+
+**Scale of the Problem**:
+- 5,000+ concurrent test sessions during peak hours
+- Each session polling 4-6 different endpoints
+- 15,000-30,000 unnecessary API calls per minute
+- Average response time degradation during high traffic
+- Increased server costs and infrastructure strain
+
+### User Experience Impact
+
+**For Candidates**:
+- 3-5 second delays in seeing test results
+- Inconsistent update timing leading to confusion
+- Battery drain on mobile devices due to constant polling
+
+**For Interviewers**:
+- Delayed visibility into candidate progress
+- Unreliable real-time collaboration features
+- Frustrating experience during live coding sessions
+
+## The WebSocket Solution
+
+### Architecture Design
+
+We designed a WebSocket-based system that could handle:
+- **Connection Management**: Robust connection handling with automatic reconnection
+- **Message Routing**: Efficient message distribution to relevant clients
+- **Scalability**: Horizontal scaling across multiple server instances
+- **Reliability**: Graceful degradation when WebSocket connections fail
+
+### Technical Implementation
+
+**Client-Side Connection Management**:
+```javascript
+class RealTimeConnection {
+  constructor(sessionId) {
+    this.sessionId = sessionId;
+    this.connection = null;
+    this.reconnectAttempts = 0;
+    this.maxReconnectAttempts = 5;
+    this.messageQueue = [];
+    
+    this.connect();
+  }
+
+  connect() {
+    this.connection = new WebSocket(`${WS_URL}/session/${this.sessionId}`);
+    
+    this.connection.onopen = () => {
+      console.log('Connected to real-time session');
+      this.reconnectAttempts = 0;
+      this.flushMessageQueue();
+    };
+
+    this.connection.onmessage = (event) => {
+      const message = JSON.parse(event.data);
+      this.handleMessage(message);
+    };
+
+    this.connection.onclose = () => {
+      this.handleDisconnection();
+    };
+
+    this.connection.onerror = (error) => {
+      console.error('WebSocket error:', error);
+    };
+  }
+
+  handleMessage(message) {
+    switch (message.type) {
+      case 'TEST_RESULT':
+        this.updateTestResults(message.data);
+        break;
+      case 'COMPILATION_STATUS':
+        this.updateCompilationStatus(message.data);
+        break;
+      case 'SESSION_UPDATE':
+        this.updateSessionInfo(message.data);
+        break;
+      default:
+        console.warn('Unknown message type:', message.type);
+    }
+  }
+
+  handleDisconnection() {
+    if (this.reconnectAttempts < this.maxReconnectAttempts) {
+      const delay = Math.pow(2, this.reconnectAttempts) * 1000; // Exponential backoff
+      setTimeout(() => {
+        this.reconnectAttempts++;
+        this.connect();
+      }, delay);
+    } else {
+      // Fall back to polling for critical updates
+      this.fallbackToPolling();
+    }
+  }
+
+  sendMessage(message) {
+    if (this.connection.readyState === WebSocket.OPEN) {
+      this.connection.send(JSON.stringify(message));
+    } else {
+      // Queue messages for when connection is restored
+      this.messageQueue.push(message);
+    }
+  }
+}
+```
+
+**Server-Side Architecture**:
+```javascript
+// Simplified server-side implementation
+class SessionManager {
+  constructor() {
+    this.sessions = new Map();
+    this.clientConnections = new Map();
+  }
+
+  handleConnection(ws, sessionId) {
+    // Register client connection
+    if (!this.clientConnections.has(sessionId)) {
+      this.clientConnections.set(sessionId, new Set());
+    }
+    this.clientConnections.get(sessionId).add(ws);
+
+    // Send initial session state
+    this.sendInitialState(ws, sessionId);
+
+    // Handle client disconnection
+    ws.on('close', () => {
+      this.clientConnections.get(sessionId).delete(ws);
+    });
+  }
+
+  broadcastToSession(sessionId, message) {
+    const clients = this.clientConnections.get(sessionId);
+    if (clients) {
+      clients.forEach(client => {
+        if (client.readyState === WebSocket.OPEN) {
+          client.send(JSON.stringify(message));
+        }
+      });
+    }
+  }
+
+  handleTestCompletion(sessionId, results) {
+    // Process results and broadcast to all session participants
+    this.broadcastToSession(sessionId, {
+      type: 'TEST_RESULT',
+      data: results,
+      timestamp: Date.now()
+    });
+  }
+}
+```
+
+### Progressive Enhancement Strategy
+
+We implemented a progressive enhancement approach to ensure backwards compatibility:
+
+```javascript
+// Feature detection and fallback
+class UpdateManager {
+  constructor(sessionId) {
+    this.sessionId = sessionId;
+    
+    if (this.supportsWebSockets()) {
+      this.realTimeConnection = new RealTimeConnection(sessionId);
+    } else {
+      this.fallbackToPolling();
+    }
+  }
+
+  supportsWebSockets() {
+    return 'WebSocket' in window && WebSocket.CLOSING === 2;
+  }
+
+  fallbackToPolling() {
+    console.log('Falling back to polling for updates');
+    this.pollingInterval = setInterval(() => {
+      this.fetchUpdates();
+    }, 5000);
+  }
+}
+```
+
+## Implementation Challenges
+
+### Challenge 1: Connection State Management
+
+**Problem**: Managing WebSocket connection lifecycle across page refreshes, network changes, and browser tab switching.
+
+**Solution**: Implemented a state machine that handles all connection states:
+
+```javascript
+const ConnectionStates = {
+  CONNECTING: 'connecting',
+  CONNECTED: 'connected',
+  RECONNECTING: 'reconnecting',
+  DISCONNECTED: 'disconnected',
+  FAILED: 'failed'
+};
+
+class ConnectionStateMachine {
+  constructor() {
+    this.state = ConnectionStates.DISCONNECTED;
+    this.listeners = new Map();
+  }
+
+  transition(newState, data = {}) {
+    const oldState = this.state;
+    this.state = newState;
+    
+    this.emit('stateChange', { from: oldState, to: newState, data });
+    this.emit(newState, data);
+  }
+
+  on(event, callback) {
+    if (!this.listeners.has(event)) {
+      this.listeners.set(event, []);
+    }
+    this.listeners.get(event).push(callback);
+  }
+
+  emit(event, data) {
+    const callbacks = this.listeners.get(event) || [];
+    callbacks.forEach(callback => callback(data));
+  }
+}
+```
+
+### Challenge 2: Message Ordering and Reliability
+
+**Problem**: Ensuring messages arrive in the correct order and handling message loss scenarios.
+
+**Solution**: Implemented message sequencing and acknowledgment system:
+
+```javascript
+class ReliableMessaging {
+  constructor(connection) {
+    this.connection = connection;
+    this.messageSequence = 0;
+    this.pendingAcks = new Map();
+    this.receivedSequences = new Set();
+  }
+
+  sendMessage(data) {
+    const message = {
+      id: this.generateMessageId(),
+      sequence: ++this.messageSequence,
+      data: data,
+      timestamp: Date.now()
+    };
+
+    this.connection.send(message);
+    
+    // Track for acknowledgment
+    this.pendingAcks.set(message.id, {
+      message: message,
+      retryCount: 0,
+      timeout: setTimeout(() => {
+        this.retryMessage(message.id);
+      }, 5000)
+    });
+  }
+
+  handleMessage(message) {
+    // Prevent duplicate processing
+    if (this.receivedSequences.has(message.sequence)) {
+      return;
+    }
+
+    this.receivedSequences.add(message.sequence);
+    
+    // Send acknowledgment
+    this.connection.send({
+      type: 'ACK',
+      messageId: message.id
+    });
+
+    // Process message
+    this.processMessage(message);
+  }
+}
+```
+
+### Challenge 3: Load Balancing and Scaling
+
+**Problem**: Distributing WebSocket connections across multiple server instances while maintaining session consistency.
+
+**Solution**: Implemented sticky sessions with Redis-based message broadcasting:
+
+```javascript
+// Redis pub/sub for cross-instance communication
+class DistributedSessionManager extends SessionManager {
+  constructor() {
+    super();
+    this.redisClient = new Redis(REDIS_CONFIG);
+    this.subscriber = new Redis(REDIS_CONFIG);
+    
+    this.subscriber.subscribe('session-updates');
+    this.subscriber.on('message', this.handleCrossInstanceMessage.bind(this));
+  }
+
+  broadcastToSession(sessionId, message) {
+    // Local broadcast
+    super.broadcastToSession(sessionId, message);
+    
+    // Cross-instance broadcast
+    this.redisClient.publish('session-updates', JSON.stringify({
+      sessionId,
+      message,
+      instanceId: this.instanceId
+    }));
+  }
+
+  handleCrossInstanceMessage(channel, data) {
+    const { sessionId, message, instanceId } = JSON.parse(data);
+    
+    // Don't rebroadcast our own messages
+    if (instanceId === this.instanceId) return;
+    
+    // Broadcast to local connections only
+    super.broadcastToSession(sessionId, message);
+  }
+}
+```
+
+## Performance Results
+
+### Quantitative Improvements
+
+**Latency Reduction**:
+- Average update latency: 3-5 seconds → 50-200 milliseconds
+- 95th percentile latency: 8 seconds → 500 milliseconds
+- Maximum observed latency: 15+ seconds → 2 seconds
+
+**Server Resource Utilization**:
+- API requests during peak hours: Reduced by 85%
+- Server CPU utilization: Decreased by 40%
+- Database connection pool usage: Reduced by 60%
+
+**Scalability Metrics**:
+- Concurrent sessions supported: 5,000 → 25,000+
+- Response time degradation under load: Eliminated
+- Infrastructure cost reduction: 30% savings on server resources
+
+### Qualitative Improvements
+
+**User Feedback**:
+- "The test results appear instantly now!"
+- "I can see my code running in real-time"
+- "The interview experience feels much more interactive"
+
+**Developer Experience**:
+- Real-time debugging capabilities for support team
+- Better visibility into platform performance
+- Simplified troubleshooting of user issues
+
+## Monitoring and Observability
+
+Implemented comprehensive monitoring to track WebSocket performance:
+
+```javascript
+class WebSocketMetrics {
+  constructor() {
+    this.metrics = {
+      connectionsActive: 0,
+      messagesPerSecond: 0,
+      averageLatency: 0,
+      errorRate: 0
+    };
+    
+    this.startMetricsCollection();
+  }
+
+  trackConnection(sessionId) {
+    this.metrics.connectionsActive++;
+    this.logMetric('connection_opened', { sessionId });
+  }
+
+  trackMessage(messageType, latency) {
+    this.metrics.messagesPerSecond++;
+    this.updateAverageLatency(latency);
+    this.logMetric('message_processed', { messageType, latency });
+  }
+
+  trackError(error, context) {
+    this.metrics.errorRate++;
+    this.logMetric('websocket_error', { error: error.message, context });
+  }
+}
+```
+
+## Lessons Learned
+
+**Graceful Degradation is Essential**: Having robust fallback mechanisms meant users never experienced complete feature loss, even during WebSocket issues.
+
+**Connection Management is Complex**: The seemingly simple concept of "maintaining a connection" involves handling dozens of edge cases around network changes, browser behavior, and server lifecycle.
+
+**Monitoring is Critical**: Real-time systems require real-time monitoring. You need to know immediately when connections are failing or performance is degrading.
+
+**User Experience Drives Technical Decisions**: The technical complexity was justified by the dramatic improvement in user experience, particularly for time-sensitive scenarios like live interviews.
+
+## Future Enhancements
+
+**Advanced Features**:
+- Message compression for high-frequency updates
+- Client-side message batching for efficiency
+- Adaptive connection management based on network conditions
+
+**Extended Use Cases**:
+- Real-time collaborative coding
+- Live interview streaming
+- Instant feedback during code execution
+
+## Final Thoughts
+
+Migrating from polling to WebSockets taught me that architectural decisions have cascading effects far beyond their immediate technical scope. This wasn't just about making API calls faster—it was about enabling entirely new user experiences and interaction patterns.
+
+The project reinforced my belief that performance improvements should be measured not just in milliseconds, but in the quality of human experiences they enable. When test results appear instantly, candidates can focus on problem-solving rather than wondering if their code is running. When interviewers see real-time progress, they can provide better guidance and support.
+
+Real-time isn't just about speed—it's about creating moments of seamless interaction that feel natural and responsive.
+
+---
+
+*This content was refined with assistance from Claude.*
+
+export default function WebSocketsContent({ children }) {
+  return <MdxLayout>{children}</MdxLayout>;
+}

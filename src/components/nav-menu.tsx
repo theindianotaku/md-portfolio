@@ -9,7 +9,7 @@ export function HeaderNav() {
   return (
     <div className="flex gap-1 sm:gap-2">
       <Button variant="ghost" size="sm" asChild>
-        <Link href="/#project-spotlights" className="no-underline">
+        <Link href="/experience" className="no-underline">
           <span className="sr-only sm:not-sr-only">Experience</span>{' '}
           <Briefcase className="sm:sr-only not-sr-only" />
         </Link>

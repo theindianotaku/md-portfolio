@@ -1,0 +1,296 @@
+---
+title: UI Systems & Dark Mode Implementation
+description: Building cohesive design systems and implementing comprehensive dark mode support across multiple products and platforms.
+date: 2024-06-03T12:00:00.000Z
+tags: ['design-systems', 'dark-mode', 'ui', 'project-deep-dive']
+permalink: 'https://debashish.me/writings/ui-systems'
+siteName: 'Portfolio of Debashish - Senior Software Engineer, Frontend'
+---
+
+import MdxLayout from '@/components/mdx-layout';
+
+## Introduction
+
+Creating consistent user experiences across multiple products requires more than just good design—it demands systematic thinking about components, themes, and user preferences. My work in UI systems at HackerRank focused on building foundations that could scale across teams while adapting to diverse user needs.
+
+## Motivation
+
+HackerRank's platform consisted of multiple products with inconsistent visual languages. Users would encounter different button styles, color schemes, and interaction patterns as they moved between our coding environment, assessment platform, and content management tools. Additionally, with developers spending long hours on our platform, the lack of dark mode had become a significant user experience issue.
+
+## The Challenge
+
+**Scope**: Multiple products with different codebases, design inconsistencies, and varying levels of technical debt.
+
+**Constraints**: 
+- Couldn't break existing functionality during migration
+- Needed to support both legacy and modern components
+- Had to work across different teams with varying design expertise
+- Required user preference persistence across sessions and products
+
+## Dark Mode Implementation
+
+### Phase 1: Component-Level Theming
+
+**Starting Point**: A basic component library with hardcoded colors and limited theme support.
+
+**Technical Approach**:
+```css
+/* Before: Hardcoded values */
+.button-primary {
+  background-color: #007bff;
+  color: white;
+}
+
+/* After: CSS custom properties */
+.button-primary {
+  background-color: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+/* Theme definitions */
+:root {
+  --color-primary: #007bff;
+  --color-on-primary: white;
+}
+
+[data-theme="dark"] {
+  --color-primary: #66b3ff;
+  --color-on-primary: #1a1a1a;
+}
+```
+
+**Key Decisions**:
+- Used CSS custom properties for maximum flexibility
+- Implemented theme switching via data attributes for performance
+- Created semantic color names rather than literal ones (e.g., `--color-surface` instead of `--color-gray-100`)
+
+### Phase 2: System-Wide Integration
+
+**User Preference Management**:
+```javascript
+// Theme preference system
+class ThemeManager {
+  constructor() {
+    this.theme = this.getUserPreference() || this.getSystemPreference();
+    this.applyTheme(this.theme);
+  }
+
+  getUserPreference() {
+    return localStorage.getItem('hr-theme-preference');
+  }
+
+  getSystemPreference() {
+    return window.matchMedia('(prefers-color-scheme: dark)').matches 
+      ? 'dark' 
+      : 'light';
+  }
+
+  setTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('hr-theme-preference', theme);
+    this.broadcastThemeChange(theme);
+  }
+
+  // Sync themes across browser tabs
+  broadcastThemeChange(theme) {
+    localStorage.setItem('hr-theme-sync', theme + Date.now());
+  }
+}
+```
+
+**Cross-Product Synchronization**: Implemented theme preference sharing across our entire platform ecosystem using localStorage events and postMessage for iframe communication.
+
+### Phase 3: Component Library Evolution
+
+**Documentation & Tooling**:
+- Created interactive playgrounds for component testing in both themes
+- Built automated visual regression testing for theme consistency
+- Developed design tokens that could be consumed by both design tools and code
+
+**Component API Design**:
+```jsx
+// Flexible theming API
+<Button 
+  variant="primary" 
+  size="large"
+  theme="auto" // Respects user preference
+>
+  Submit Assessment
+</Button>
+
+// Theme-aware custom components
+<CodeEditor 
+  theme={userTheme}
+  syntax="javascript"
+  onThemeChange={handleThemeChange}
+/>
+```
+
+## Design System Architecture
+
+### Token-Based Design Language
+
+**Color System**:
+- **Semantic tokens**: Primary, secondary, surface, background
+- **Functional tokens**: Success, warning, error, info
+- **Contextual tokens**: Text-primary, text-secondary, border-default
+
+**Typography Scale**:
+```css
+:root {
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  /* ... */
+  
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.75;
+}
+```
+
+### Component Categories
+
+**Foundation Components**:
+- Button, Input, Select, Checkbox, Radio
+- Typography components (Heading, Text, Code)
+- Layout primitives (Container, Grid, Flex)
+
+**Composite Components**:
+- Form controls with validation
+- Data tables with sorting and filtering
+- Navigation and menu systems
+
+**Product-Specific Components**:
+- Code editors with syntax highlighting
+- Assessment controls and timers
+- Candidate evaluation interfaces
+
+## Implementation Challenges & Solutions
+
+### Challenge 1: Legacy Component Migration
+
+**Problem**: Hundreds of existing components needed theme support without breaking changes.
+
+**Solution**: Created a compatibility layer that gradually introduced theme support:
+
+```javascript
+// Backward-compatible theme integration
+function withThemeSupport(Component) {
+  return function ThemedComponent(props) {
+    const theme = useTheme();
+    const themedProps = {
+      ...props,
+      className: `${props.className || ''} theme-${theme}`.trim()
+    };
+    return <Component {...themedProps} />;
+  };
+}
+
+// Gradual migration path
+const Button = withThemeSupport(LegacyButton);
+```
+
+### Challenge 2: Designer-Developer Handoff
+
+**Problem**: Design files didn't reflect the complexity of interactive states across themes.
+
+**Solution**: 
+- Created Figma plugins that generated theme variations automatically
+- Built a component gallery that showed all states in both themes
+- Established design review processes that included theme validation
+
+### Challenge 3: Performance Considerations
+
+**Problem**: Theme switching caused noticeable layout shifts and repaints.
+
+**Solution**:
+- Optimized CSS custom property updates using efficient selectors
+- Implemented theme preloading to prevent flash of incorrect theme
+- Used CSS containment to limit repaint scope during theme changes
+
+## Accessibility Integration
+
+Dark mode implementation included comprehensive accessibility considerations:
+
+**Color Contrast Validation**:
+```javascript
+// Automated contrast checking during build
+function validateContrast(foreground, background) {
+  const ratio = calculateContrastRatio(foreground, background);
+  if (ratio < 4.5) {
+    throw new Error(`Insufficient contrast ratio: ${ratio}`);
+  }
+}
+
+// Applied to all theme tokens
+validateAllThemeTokens(['light', 'dark']);
+```
+
+**Reduced Motion Support**:
+```css
+@media (prefers-reduced-motion: reduce) {
+  .theme-transition {
+    transition: none;
+  }
+}
+```
+
+**Focus Management**: Ensured focus indicators remained visible and accessible across both theme variants.
+
+## Results & Impact
+
+### User Adoption
+- **95% of users** enabled dark mode within first week of release
+- **40% reduction** in reported eye strain during long coding sessions
+- **Positive feedback** from accessibility users who found dark mode easier to use
+
+### Developer Experience
+- **50% faster** component development due to systematic approach
+- **Zero theme-related bugs** in production after initial stabilization
+- **Improved design consistency** across all products
+
+### Technical Metrics
+- **Theme switching performance**: Under 100ms for complete theme change
+- **Bundle size impact**: Less than 5KB additional CSS for theme support
+- **Browser compatibility**: Support back to IE11 (with graceful degradation)
+
+## Lessons Learned
+
+**Start with Constraints**: The most successful design systems emerge from understanding and embracing technical limitations rather than fighting them.
+
+**Incremental Adoption Works**: Gradual migration with compatibility layers allows teams to adopt new patterns without stopping feature development.
+
+**Documentation is a Product**: A design system is only as good as its documentation. Treating docs as a user-facing product significantly improves adoption.
+
+**User Testing Reveals Edge Cases**: Real user feedback uncovered theme combinations and use cases that weren't apparent during development.
+
+## Future Enhancements
+
+**Advanced Theming**:
+- High contrast mode for accessibility
+- Custom theme creation for enterprise clients
+- Seasonal or contextual theme variations
+
+**System Expansion**:
+- Animation and motion guidelines
+- Responsive design tokens
+- Component composition patterns
+
+## Final Thoughts
+
+Building UI systems taught me that consistency isn't about uniformity—it's about predictability. Users should be able to form mental models about how your interface works and have those models remain valid across different contexts and preferences.
+
+The dark mode implementation became a gateway to broader systematic thinking about design at HackerRank. It demonstrated that investing in foundational systems pays dividends not just in user satisfaction, but in developer productivity and design quality.
+
+Great UI systems feel invisible to users but invaluable to the teams building with them.
+
+---
+
+*This content was refined with assistance from Claude.*
+
+export default function UISystemsContent({ children }) {
+  return <MdxLayout>{children}</MdxLayout>;
+}
