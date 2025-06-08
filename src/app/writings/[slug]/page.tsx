@@ -4,7 +4,6 @@ import { getBlogSlugs } from '@/lib/blog'; // We'll rename this function later
 import { MDXComponent, pParams } from '@/types/types';
 import TableOfContents from '@/components/table-of-contents';
 import { Badge } from '@/components/ui/badge';
-import PageTransition from '@/components/page-transition';
 
 // Generate static paths at build time
 export async function generateStaticParams() {
@@ -69,8 +68,7 @@ export default async function WritingPage({ params }: { params: pParams }) {
     }
 
     return (
-      <PageTransition>
-        <main className="main">
+      <main className="main">
           <article className="content-wrapper flex flex-col items-center">
             <header className="mb-8">
               <div className="flex items-center gap-2 mb-3">
@@ -122,8 +120,7 @@ export default async function WritingPage({ params }: { params: pParams }) {
               )}
             </div>
           </article>
-        </main>
-      </PageTransition>
+      </main>
     );
   } catch (error) {
     console.error(`Failed to load writing: ${slug}`, error);

@@ -1,12 +1,12 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 
-export default function AnimatedButton({ ...props }) {
+export default function AnimatedButton({ className = '', ...props }) {
   return (
-    <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
-      <Button {...props} />
-    </motion.div>
+    <Button
+      className={`transition-transform duration-150 ease-in-out hover:scale-[1.03] active:scale-[0.98] ${className}`}
+      {...props}
+    />
   );
 }

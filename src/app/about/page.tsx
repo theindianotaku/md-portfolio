@@ -1,6 +1,5 @@
 // src/app/about/page.tsx
 import AboutContent from '@/markdown/about-content.mdx';
-import PageTransition from '@/components/page-transition';
 
 export const metadata = {
   title: 'About | Debashish Nayak',
@@ -24,28 +23,26 @@ export const metadata = {
 
 export default function AboutPage() {
   return (
-    <PageTransition>
-      <main className="main">
-        <div className="content-wrapper flex flex-col items-center">
-          <header className="mb-8 text-center">
-            <h1 className="font-serif font-light text-2xl md:text-3xl text-highlight mb-4">
-              About Me
-            </h1>
-            <p className="text-xl text-muted-foreground max-w-2xl">
-              Frontend Engineer passionate about crafting accessible,
-              user-focused web experiences
-            </p>
-          </header>
+    <main className="main">
+      <div className="content-wrapper flex flex-col items-center">
+        <header className="mb-8 text-center">
+          <h1 className="font-serif font-light text-2xl md:text-3xl text-highlight mb-4">
+            About Me
+          </h1>
+          <p className="text-xl text-muted-foreground max-w-2xl">
+            Frontend Engineer passionate about crafting accessible,
+            user-focused web experiences
+          </p>
+        </header>
 
-          <div className="w-full lg:flex lg:flex-row">
-            <div className="lg:flex-1">
-              <div className="flex flex-col items-center max-w-none">
-                <AboutContent />
-              </div>
+        <div className="w-full lg:flex lg:flex-row">
+          <div className="lg:flex-1">
+            <div className="flex flex-col items-center max-w-none">
+              <AboutContent />
             </div>
           </div>
         </div>
-      </main>
-    </PageTransition>
+      </div>
+    </main>
   );
 }

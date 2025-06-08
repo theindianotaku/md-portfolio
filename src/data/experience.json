@@ -1,0 +1,98 @@
+{
+  "experiences": [
+    {
+      "id": "senior-engineer",
+      "title": "Senior Software Engineer",
+      "company": "HackerRank",
+      "startDate": "Jan 2022",
+      "endDate": "Apr 2024",
+      "description": "My final role at HackerRank allowed me to focus on three areas I'm passionate about: accessibility, developer experience, and mentorship. This period was defined by leading large-scale initiatives and mentoring the next generation of engineers.",
+      "achievements": [
+        "Led accessibility improvements for over 6,200 problem descriptions, creating systems to identify, categorize, and fix issues at scale",
+        "Customized VSCode for platform needs and standardized iframe communication using Penpal",
+        "Mentored junior engineers from onboarding through feature ownership, providing technical guidance and career development",
+        "Improved hiring processes by developing interview questions that better reflect real-world engineering challenges"
+      ],
+      "relatedLinks": [
+        {
+          "title": "Accessibility Journey",
+          "url": "/blog/accessibility"
+        },
+        {
+          "title": "Developer Tools & VSCode",
+          "url": "/writings/developer-tooling"
+        }
+      ]
+    },
+    {
+      "id": "sde-ii",
+      "title": "Software Development Engineer II",
+      "company": "HackerRank",
+      "startDate": "Jul 2020",
+      "endDate": "Dec 2021",
+      "description": "As I moved into a more senior role, the pandemic hit, and our priorities shifted. Remote work became the norm, and our platform needed to adapt to support remote hiring processes. This period marked my deep dive into accessibility and real-time architecture.",
+      "achievements": [
+        "Led the effort to make HackerRank Screen accessible according to WCAG 2.1 Level AA standards",
+        "Collaborated with Deque Systems on comprehensive accessibility audits",
+        "Transitioned from polling architecture to WebSockets for long-running tasks",
+        "Developed proctoring solutions and improved component communication for remote assessments"
+      ],
+      "relatedLinks": [
+        {
+          "title": "Accessibility Standards Implementation",
+          "url": "/blog/accessibility"
+        },
+        {
+          "title": "WebSockets Migration",
+          "url": "/writings/websockets-performance"
+        }
+      ]
+    },
+    {
+      "id": "sde-i",
+      "title": "Software Development Engineer I",
+      "company": "HackerRank",
+      "startDate": "Aug 2018",
+      "endDate": "Jun 2020",
+      "description": "As a full-time engineer, I was thrown into the deep end with large-scale migrations and system modernization. This period taught me more about application architecture than any course ever could, and sparked my passion for theming and design systems.",
+      "achievements": [
+        "Led migration of HackerRank's Screen product from Backbone.js to React",
+        "Developed passion for theming and dark mode implementation",
+        "Led organization-wide initiatives on standardizing component library",
+        "Successfully convinced team to move away from jQuery with comprehensive technical presentation",
+        "Ensured theme consistency across products during modernization effort"
+      ],
+      "relatedLinks": [
+        {
+          "title": "UI Systems & Dark Mode",
+          "url": "/writings/ui-systems"
+        }
+      ]
+    },
+    {
+      "id": "intern",
+      "title": "Software Engineering Intern",
+      "company": "HackerRank",
+      "startDate": "Jun 2018",
+      "endDate": "Aug 2018",
+      "description": "Fresh out of college with a Metallurgical Engineering degree, I stepped into HackerRank as an intern. With more enthusiasm than experience, I was tasked with revitalizing their internal UIKit. This was where my frontend journey truly began.",
+      "achievements": [
+        "Built my first Toast notification component for the internal UIKit",
+        "Created a React wrapper for CKEditor for content management",
+        "Set up linting configurations that became organizational standards",
+        "Built an entire intern website overnight after a bet with CTO Hari (and won! ✌️)",
+        "Laid the foundation for what would become core strengths in my career"
+      ],
+      "relatedLinks": [
+        {
+          "title": "Component Library Evolution",
+          "url": "/writings/ui-systems"
+        },
+        {
+          "title": "Early Developer Tooling",
+          "url": "/writings/developer-tooling"
+        }
+      ]
+    }
+  ]
+}

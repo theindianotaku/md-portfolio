@@ -74,7 +74,7 @@ export default function RootLayout({
           attribute="class"
           disableTransitionOnChange
         >
-          <GrainShapes count={10} />
+          <GrainShapes count={6} />
           <Header />
           <div className="flex flex-col flex-grow pt-10 md:pt-30">
             {children}

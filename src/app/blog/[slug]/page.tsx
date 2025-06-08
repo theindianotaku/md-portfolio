@@ -4,7 +4,6 @@ import { getBlogSlugs } from '@/lib/blog';
 import { MDXComponent, pParams } from '@/types/types';
 import TableOfContents from '@/components/table-of-contents';
 import { Badge } from '@/components/ui/badge';
-import PageTransition from '@/components/page-transition';
 
 // Generate static paths at build time
 export async function generateStaticParams() {
@@ -50,8 +49,7 @@ export default async function BlogPostPage({ params }: { params: pParams }) {
     const { default: Content, frontmatter, tableOfContents } = PostModule;
 
     return (
-      <PageTransition>
-        <main className="main">
+      <main className="main">
           <article className="content-wrapper flex flex-col items-center">
             <header className="mb-8">
               <h1 className="text-2xl md:text-3xl font-bold mb-2">
@@ -93,8 +91,7 @@ export default async function BlogPostPage({ params }: { params: pParams }) {
               )}
             </div>
           </article>
-        </main>
-      </PageTransition>
+      </main>
     );
   } catch (error) {
     console.error(`Failed to load blog post: ${slug}`, error);

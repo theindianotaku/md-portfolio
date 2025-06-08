@@ -16,6 +16,92 @@ import { cn } from '@/lib/utils';
 
 import type { TocEntry, Toc } from '@stefanprobst/rehype-extract-toc';
 
+/**
+ * Custom hook to track the most visible section
+ */
+const useActiveSection = () => {
+  const [activeId, setActiveId] = useState<string>('');
+
+  useEffect(() => {
+    const getSection = (heading: Element) => {
+      const section = { start: heading, elements: [heading] };
+      let next = heading.nextElementSibling;
+      
+      while (next && !['H1', 'H2', 'H3', 'H4', 'H5', 'H6'].includes(next.tagName)) {
+        section.elements.push(next);
+        next = next.nextElementSibling;
+      }
+      
+      return section;
+    };
+
+    const getSectionVisibility = (section: { start: Element; elements: Element[] }) => {
+      let totalHeight = 0;
+      let visibleHeight = 0;
+      
+      section.elements.forEach(element => {
+        const rect = element.getBoundingClientRect();
+        const elementHeight = rect.height;
+        totalHeight += elementHeight;
+        
+        // Calculate visible portion of this element
+        const windowHeight = window.innerHeight;
+        const visibleTop = Math.max(0, rect.top);
+        const visibleBottom = Math.min(windowHeight, rect.bottom);
+        const elementVisibleHeight = Math.max(0, visibleBottom - visibleTop);
+        
+        visibleHeight += elementVisibleHeight;
+      });
+      
+      return totalHeight > 0 ? visibleHeight / totalHeight : 0;
+    };
+
+    const updateActiveSection = () => {
+      const headings = document.querySelectorAll('h2[id], h3[id], h4[id]');
+      let maxVisibility = 0;
+      let mostVisibleId = '';
+      
+      headings.forEach(heading => {
+        const section = getSection(heading);
+        const visibility = getSectionVisibility(section);
+        
+        if (visibility > maxVisibility) {
+          maxVisibility = visibility;
+          mostVisibleId = heading.id;
+        }
+      });
+      
+      if (mostVisibleId && maxVisibility > 0.1) {
+        setActiveId(mostVisibleId);
+      }
+    };
+
+    // Update on scroll with throttling
+    let ticking = false;
+    const handleScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          updateActiveSection();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    // Initial update
+    updateActiveSection();
+    
+    // Listen to scroll events
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  return activeId;
+};
+
 type TableOfContentsProps = {
   items: Toc;
   className?: string;
@@ -96,34 +182,8 @@ const RenderTOCItems = ({
  * Mobile drawer view of the table of contents
  */
 const MobileTOC = ({ items }: { items: Toc }) => {
-  const [activeId, setActiveId] = useState<string>('');
+  const activeId = useActiveSection();
   const [isOpen, setIsOpen] = useState(false);
-
-  // Handle setting the active ID based on scroll position
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveId(entry.target.id);
-          }
-        });
-      },
-      {
-        rootMargin: '-80px 0px -80% 0px',
-        threshold: 0,
-      },
-    );
-
-    // Observe all section headings
-    document.querySelectorAll('h2, h3, h4').forEach((heading) => {
-      observer.observe(heading);
-    });
-
-    return () => {
-      observer.disconnect();
-    };
-  }, []);
 
   return (
     <Drawer open={isOpen} onOpenChange={setIsOpen}>
@@ -170,33 +230,7 @@ const DesktopTOC = ({
   items: Toc;
   className?: string;
 }) => {
-  const [activeId, setActiveId] = useState<string>('');
-
-  // Handle setting the active ID based on scroll position
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveId(entry.target.id);
-          }
-        });
-      },
-      {
-        rootMargin: '-100px 0px -70% 0px',
-        threshold: 0.1,
-      },
-    );
-
-    // Observe all section headings
-    document.querySelectorAll('h2, h3, h4').forEach((heading) => {
-      observer.observe(heading);
-    });
-
-    return () => {
-      observer.disconnect();
-    };
-  }, []);
+  const activeId = useActiveSection();
 
   return (
     <aside className={cn('hidden lg:block w-64 flex-shrink-0 ', className)}>

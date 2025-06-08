@@ -194,8 +194,18 @@ Each MDX file should export a default component using `MdxLayout` wrapper.
 
 #### List of Tasks
 
+##### Phase 1: Basic Structure (COMPLETED)
+
 1. [DONE] **Create new page routes** (`/experience`, `/writings`, `/about`)
-2. [TODO] **Move content from homepage** to respective pages
-3. [TODO] **Update navigation** in header component
-4. [TODO] **Add internal linking** from Experience → Project Deep Dives
-5. [TODO] **Homepage redesign** - condensed version with featured items
+2. [DONE] **Move content from homepage** to respective pages
+3. [DONE] **Update navigation** in header component
+4. [DONE] **Add internal linking** from Experience → Project Deep Dives
+5. [DONE] **Homepage redesign** - condensed version with featured items
+
+##### Phase 2: Content & Architecture Improvements
+
+6. [TODO] **Job search messaging** - Re-think how to tastefully include "I am looking for my next opportunity" in the website
+7. [DONE] **Data-driven experience** - Move experience page content to JSON format for better maintainability
+8. [TODO] **UI design research** - Document UI re-design inspiration and implementation plan
+9. [TODO] **Content refinement** - Re-think and improve content for home and about pages
+10. [TODO] **Code examples cleanup** - Re-write blog code examples with actual project examples instead of generated ones

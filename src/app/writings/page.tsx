@@ -2,7 +2,6 @@
 import Link from 'next/link';
 import { getAllBlogPostsMetadata } from '@/lib/blog'; // We'll rename this function later
 import { Badge } from '@/components/ui/badge';
-import PageTransition from '@/components/page-transition';
 
 export const metadata = {
   title: 'Writings | Debashish Nayak',
@@ -52,8 +51,7 @@ export default async function WritingsPage() {
   );
 
   return (
-    <PageTransition>
-      <main className="main flex-grow justify-between">
+    <main className="main flex-grow justify-between">
         <div className="prose-container px-5 md:px-10">
           <header className="mb-8">
             <h1 className="font-serif font-light text-2xl md:text-3xl text-highlight mb-4">
@@ -330,7 +328,6 @@ export default async function WritingsPage() {
             </div>
           )}
         </div>
-      </main>
-    </PageTransition>
+    </main>
   );
 }
